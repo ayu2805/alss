@@ -191,6 +191,7 @@ sidebarWidth=110
 viewMode=Detail" sudo tee ~/.config/QtProject.conf > /dev/null
 
 setup_gnome(){
+    echo ""
     sudo cp gnome/gsconnect /etc/ufw/applications.d/
     sudo ufw app update GSConnect
     sudo ufw allow GSConnect
@@ -271,6 +272,7 @@ setup_gnome(){
 }
 
 setup_kde(){
+    echo ""
     sudo cp kdeconnect /etc/ufw/applications.d/
     sudo ufw app update "KDE Connect"
     sudo ufw allow "KDE Connect"
