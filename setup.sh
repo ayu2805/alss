@@ -222,6 +222,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface clock-show-weekday true
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     #gsettings set org.gnome.desktop.interface enable-hot-corners false
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
     gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
     gsettings set org.gnome.desktop.interface show-battery-percentage true
     #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
@@ -237,17 +238,6 @@ setup_gnome(){
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
-
-    echo ""
-    read -r -p "Do you want to install Libadwaita theme for GTK3? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        release=$(git ls-remote --tags https://github.com/lassekongo83/adw-gtk3.git | awk -F"/" '{print $3}' | sort -V | tail -1)
-        #release=${tag//./-}
-        wget -q -nc --show-progress https://github.com/lassekongo83/adw-gtk3/releases/latest/download/adw-gtk3$release.tar.xz
-        sudo tar -xJf adw-gtk3$release.tar.xz -C /usr/share/themes/
-        rm adw-gtk3$release.tar.xz
-        gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
-    fi
 
     echo ""
     read -r -p "Do you want to install some extentions that can be necessary? [y/N] " response
