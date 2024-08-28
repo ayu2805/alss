@@ -359,7 +359,7 @@ do
     case $de in
         "Gnome")
             setup_gnome
-	           break;;
+            break;;
         "KDE")
             setup_kde
             break;;
