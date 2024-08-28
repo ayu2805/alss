@@ -361,13 +361,13 @@ do
             setup_gnome
 	           break;;
         "KDE")
-	           setup_kde
-	           break;;
-	       "XFCE")
-	           setup_xfce
-	           break;;
-	       *)
-	           echo "Wrong Option";;
+            setup_kde
+            break;;
+        "XFCE")
+            setup_xfce
+            break;;
+        *)
+            echo "Wrong Option";;
     esac
 done
 
