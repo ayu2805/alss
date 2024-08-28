@@ -62,10 +62,9 @@ fi
 
 echo ""
 sudo pacman -S --needed --noconfirm - <common
-sudo systemctl enable --now ufw
-sudo systemctl enable --now cups
 sudo systemctl disable systemd-resolved.service
-sudo systemctl enable sshd avahi-daemon power-profiles-daemon
+sudo systemctl enable avahi-daemon.socket cups.socket power-profiles-daemon sshd ufw
+sudo systemctl start ufw
 
 sudo mkdir -p /etc/pacman.d/hooks/
 echo "[global]
@@ -131,64 +130,6 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     git config --global user.signingkey /home/$(whoami)/.ssh/id_ed25519.pub
     git config --global commit.gpgsign true
 fi
-
-echo ""
-read -r -p "Do you want to install Firefox? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm firefox firefox-ublock-origin
-fi
-
-echo ""
-read -r -p "Do you want Bluetooth Service? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm bluez
-    sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
-    sudo systemctl enable bluetooth
-fi
-
-echo ""
-read -r -p "Do you want to install HPLIP (Driver for HP printers)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm hplip python-pyqt5 sane
-    hp-plugin -i
-fi
-
-echo ""
-read -r -p "Do you want to install Code-OSS? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm code
-    echo ""
-    read -r -p "Do you want to install proprietary VSCode marketplace? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yay -S --needed --noconfirm code-marketplace
-    fi
-fi
-
-echo ""
-read -r -p "Do you want to install Telegram? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm telegram-desktop
-fi
-
-echo ""
-read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo ""
-    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/7ad8100b15699605fbf50291af8df16c/raw/warp-update)"
-    warp-cli generate-completions fish | sudo tee /etc/fish/completions/warp-cli.fish > /dev/null
-fi
-
-echo ""
-read -r -p "Do you want Gaming Stuff? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo ""
-    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/37d0d1740cd7cc8e1a37b2a1c2ecf7a6/raw/archlinux-gaming-setup)"
-fi
-
-echo "[FileDialog]
-shortcuts=file:, file:///home/ap, file:///home/ap/Desktop, file:///home/ap/Documents, file:///home/ap/Downloads,  file:///home/ap/Music, file:///home/ap/Pictures, file:///home/ap/Videos
-sidebarWidth=110
-viewMode=Detail" sudo tee ~/.config/QtProject.conf > /dev/null
 
 setup_gnome(){
     echo ""
@@ -372,6 +313,28 @@ do
 done
 
 echo ""
+read -r -p "Do you want to install Firefox? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm firefox firefox-ublock-origin
+fi
+
+echo ""
+read -r -p "Do you want Bluetooth Service? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm bluez
+    sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo systemctl enable bluetooth
+fi
+
+echo ""
+read -r -p "Do you want to install Telegram? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm telegram-desktop
+fi
+
+sudo sed -i 's/PKGEXT=\'.pkg.tar.zst\'/PKGEXT=\'.pkg.tar\'/' /etc/makepkg.conf
+
+echo ""
 if [ "$(pactree -r chaotic-keyring && pactree -r chaotic-mirrorlist)" ]; then
     echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a /etc/pacman.d/custom > /dev/null
 else
@@ -404,6 +367,49 @@ else
 fi
 
 yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
+
+echo ""
+read -r -p "Do you want to install HPLIP? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm hplip python-pyqt5 sane wget
+    
+    echo ""
+    read -r -p "Do you want to install HPLIP Plugin? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        yay -S --needed --noconfirm hplip-plugin
+    fi
+fi
+
+echo ""
+read -r -p "Do you want to install Code-OSS? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm code
+    echo ""
+    read -r -p "Do you want to install proprietary VSCode marketplace? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        yay -S --needed --noconfirm code-marketplace
+    fi
+fi
+
+echo ""
+read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo ""
+    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/7ad8100b15699605fbf50291af8df16c/raw/warp-update)"
+    warp-cli generate-completions fish | sudo tee /etc/fish/completions/warp-cli.fish > /dev/null
+fi
+
+echo ""
+read -r -p "Do you want Gaming Stuff? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo ""
+    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/37d0d1740cd7cc8e1a37b2a1c2ecf7a6/raw/archlinux-gaming-setup)"
+fi
+
+echo "[FileDialog]
+shortcuts=file:, file:///home/ap, file:///home/ap/Desktop, file:///home/ap/Documents, file:///home/ap/Downloads,  file:///home/ap/Music, file:///home/ap/Pictures, file:///home/ap/Videos
+sidebarWidth=110
+viewMode=Detail" sudo tee ~/.config/QtProject.conf > /dev/null
 
 echo ""
 echo "You can now reboot your system"
