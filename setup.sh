@@ -356,19 +356,19 @@ PS3="Select Desktop Environment: "
 
 select de in Gnome KDE XFCE 
 do
-        case $de in
+    case $de in
         "Gnome")
-	        setup_gnome
-	        break;;
-	    "KDE")
-	        setup_kde
-	        break;;
-	    "XFCE")
-	        setup_xfce
-	        break;;
-	    *)
-	        echo "Wrong Option";;
-	esac
+            setup_gnome
+	           break;;
+        "KDE")
+	           setup_kde
+	           break;;
+	       "XFCE")
+	           setup_xfce
+	           break;;
+	       *)
+	           echo "Wrong Option";;
+    esac
 done
 
 echo ""
