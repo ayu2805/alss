@@ -92,7 +92,6 @@ Depends = gutenprint
 When = PostTransaction
 Exec = /usr/bin/cups-genppdupdate" | sudo tee /etc/pacman.d/hooks/gutenprint.hook > /dev/null
 
-sudo cupsctl
 sudo ufw enable
 sudo ufw allow IPP
 sudo ufw allow CIFS
