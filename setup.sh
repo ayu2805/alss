@@ -125,6 +125,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     read -p "Enter your Git email: " git_email
     git config --global user.name "$git_name"
     git config --global user.email "$git_email"
+    git config --global init.defaultBranch main
     ssh-keygen -C "$git_email"
     git config --global gpg.format ssh
     git config --global user.signingkey /home/$(whoami)/.ssh/id_ed25519.pub
