@@ -333,7 +333,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm telegram-desktop
 fi
 
-sudo sed -i 's/PKGEXT=\'.pkg.tar.zst\'/PKGEXT=\'.pkg.tar\'/' /etc/makepkg.conf
+sudo sed -i "s/PKGEXT=\'.pkg.tar.zst\'/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
 
 echo ""
 if [ "$(pactree -r chaotic-keyring && pactree -r chaotic-mirrorlist)" ]; then
