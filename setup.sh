@@ -309,7 +309,8 @@ do
             setup_xfce
             break;;
         *)
-            echo "Wrong Option";;
+            echo "Skipping installation of desktop environment..."
+            break;;
     esac
 done
 
