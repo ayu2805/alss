@@ -374,18 +374,6 @@ fi
 yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
 
 echo ""
-read -r -p "Do you want to install HPLIP? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm hplip python-pyqt5 sane wget
-    
-    echo ""
-    read -r -p "Do you want to install HPLIP Plugin? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yay -S --needed --noconfirm hplip-plugin
-    fi
-fi
-
-echo ""
 read -r -p "Do you want to install Code-OSS? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm code
