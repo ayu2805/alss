@@ -324,7 +324,8 @@ echo ""
 read -r -p "Do you want Bluetooth Service? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm bluez
-    sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo sed -i 's/^#AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo sed -i 's/^AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
     sudo systemctl enable bluetooth
 fi
 
@@ -334,7 +335,9 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm telegram-desktop
 fi
 
-sudo sed -i "s/PKGEXT=\'.pkg.tar.zst\'/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
+sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
+sudo sed -i 's/^#MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
+sudo sed -i 's/^MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
 
 echo ""
 if [ "$(pactree -r chaotic-keyring && pactree -r chaotic-mirrorlist)" ]; then
