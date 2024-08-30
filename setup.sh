@@ -46,7 +46,23 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
 fi
 
 echo ""
-read -r -p "Do you want to install Nvidia drivers(Maxwell+)? [y/N] " response
+read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+    echo -e options "nvidia-drm modeset=1 fbdev=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
+    sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+    sudo mkinitcpio -P
+    sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
+
+    echo ""
+    read -r -p "Do you want to enable NVIDIA's Dynamic Boost(Ampere+)? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        sudo systemctl enable nvidia-powerd
+    fi
+fi
+
+echo ""
+read -r -p "Do you want to install NVIDIA drivers(Maxwell+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
     echo -e options "nvidia-drm modeset=1 fbdev=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
@@ -55,7 +71,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
 
     echo ""
-    read -r -p "Do you want to enable Nvidia's Dynamic Boost(Ampere+)? [y/N] " response
+    read -r -p "Do you want to enable NVIDIA's Dynamic Boost(Ampere+)? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
         sudo systemctl enable nvidia-powerd
     fi
