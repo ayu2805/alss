@@ -20,9 +20,8 @@ grep -qF "Include = /etc/pacman.d/custom" /etc/pacman.conf || echo "Include = /e
 echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/pacman.d/custom > /dev/null
 
 echo ""
-if [ "$(pactree -r reflector)" ]; then
-    true
-else
+echo ""
+read -r -p "Do you want to run reflector? [y/N] " response
     sudo pacman -Sy --needed --noconfirm reflector
     echo -e "\nIt will take time to fetch the mirrors so please wait"
     sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F _ '{print $2}') -f 10
