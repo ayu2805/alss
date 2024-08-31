@@ -19,9 +19,14 @@ fi
 grep -qF "Include = /etc/pacman.d/custom" /etc/pacman.conf || echo "Include = /etc/pacman.d/custom" | sudo tee -a /etc/pacman.conf > /dev/null
 echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/pacman.d/custom > /dev/null
 
-sudo pacman -Sy --needed --noconfirm reflector
-echo -e "\nIt will take time to fetch the mirrors so please wait"
-sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F _ '{print $2}') -f 10
+echo ""
+if [ "$(pactree -r reflector)" ]; then
+    true
+else
+    sudo pacman -Sy --needed --noconfirm reflector
+    echo -e "\nIt will take time to fetch the mirrors so please wait"
+    sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F _ '{print $2}') -f 10
+fi
 
 echo ""
 sudo pacman -Syu --needed --noconfirm pacman-contrib
