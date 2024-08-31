@@ -20,7 +20,6 @@ grep -qF "Include = /etc/pacman.d/custom" /etc/pacman.conf || echo "Include = /e
 echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/pacman.d/custom > /dev/null
 
 echo ""
-echo ""
 read -r -p "Do you want to run reflector? [y/N] " response
     sudo pacman -Sy --needed --noconfirm reflector
     echo -e "\nIt will take time to fetch the mirrors so please wait"
