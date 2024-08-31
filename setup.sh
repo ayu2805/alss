@@ -315,23 +315,23 @@ setup_xfce(){
     fi
 }
 
-PS3="Select Desktop Environment: "
-
-select de in Gnome KDE XFCE 
-do
-    case $de in
-        "Gnome")
+while true; do
+    echo -e "1) Gnome\n2) KDE\n3) XFCE"
+    read -p "Select Desktop Environment(or press enter to skip): "
+    case $REPLY in
+        "1")
             setup_gnome
-            break;;
-        "KDE")
+	        break;;
+        "2")
             setup_kde
-            break;;
-        "XFCE")
+	        break;;
+        "3")
             setup_xfce
-            break;;
-        *)
-            echo "Skipping installation of desktop environment..."
-            break;;
+	        break;;
+        "")
+	        break;;
+	    *)
+	    echo -e "\nInvalid choice. Please try again...";;
     esac
 done
 
