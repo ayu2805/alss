@@ -21,6 +21,7 @@ echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/
 
 echo ""
 read -r -p "Do you want to run reflector? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -Sy --needed --noconfirm reflector
     echo -e "\nIt will take time to fetch the mirrors so please wait"
     sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F _ '{print $2}') -f 10
