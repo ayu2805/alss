@@ -53,7 +53,7 @@ echo ""
 read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
-    echo -e options "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
+    echo -e "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -P
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
@@ -69,7 +69,7 @@ echo ""
 read -r -p "Do you want to install NVIDIA drivers(Maxwell+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
-    echo -e options "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
+    echo -e "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -P
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
@@ -120,7 +120,13 @@ sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
 pipx ensurepath
-echo -e "127.0.0.1\tlocalhost\n127.0.1.1\t$(hostname)\n\n# The following lines are desirable for IPv6 capable hosts\n::1     localhost ip6-localhost ip6-loopback\nff02::1 ip6-allnodes\nff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
+echo "127.0.0.1\tlocalhost
+127.0.1.1\t$(hostname)
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
 #register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
 
 echo ""
