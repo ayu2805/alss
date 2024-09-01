@@ -53,7 +53,7 @@ echo ""
 read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
-    echo -e options "nvidia-drm modeset=1 fbdev=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
+    echo -e options "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -P
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
@@ -69,7 +69,7 @@ echo ""
 read -r -p "Do you want to install NVIDIA drivers(Maxwell+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
-    echo -e options "nvidia-drm modeset=1 fbdev=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
+    echo -e options "options nvidia-drm modeset=1\noptions nvidia-drm fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -P
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
