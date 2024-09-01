@@ -65,14 +65,14 @@ nvidia_common(){
 echo ""
 read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
     nvidia_common
 fi
 
 echo ""
 read -r -p "Do you want to install NVIDIA drivers(Maxwell+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-utils nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+    sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
     nvidia_common
 fi
 
