@@ -49,5 +49,4 @@ vulkan-mesa-layers
 wl-clipboard
 xclip
 xf86-input-evdev
-xorg-server
 yt-dlp
