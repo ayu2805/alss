@@ -88,6 +88,7 @@ sudo systemctl enable avahi-daemon.socket cups.socket power-profiles-daemon sshd
 sudo systemctl start ufw
 
 sudo mkdir -p /etc/pacman.d/hooks/
+
 echo "[global]
 workgroup = WORKGROUP
 server string = Samba Server
@@ -120,6 +121,7 @@ sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
 pipx ensurepath
+
 echo "127.0.0.1\tlocalhost
 127.0.1.1\t$(hostname)
 
@@ -127,12 +129,12 @@ echo "127.0.0.1\tlocalhost
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
+
 #register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
 
 echo ""
 read -r -p "Do you want to create a Samba Shared folder? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo -e "[global]\nworkgroup = WORKGROUP\nserver string = Samba Server\nnetbios name = $(hostname)\n\n" | sudo tee /etc/samba/smb.conf > /dev/null
     echo -e "[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nwritable = yes\nbrowsable = yes\nguest ok = no" | sudo tee -a /etc/samba/smb.conf > /dev/null
     rm -rf ~/Samba\ Share
     mkdir ~/Samba\ Share
