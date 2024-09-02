@@ -194,7 +194,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface show-battery-percentage true
     gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
-    gsettings set org.gnome.desktop.peripherals.touchpad speed 0.4
+    gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
     gsettings set org.gnome.desktop.privacy old-files-age uint32\ 7
     gsettings set org.gnome.desktop.privacy remember-recent-files false
