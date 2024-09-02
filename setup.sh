@@ -238,7 +238,7 @@ setup_gnome(){
 
 setup_kde(){
     echo ""
-    sudo cp kdeconnect /etc/ufw/applications.d/
+    sudo cp kde/kdeconnect /etc/ufw/applications.d/
     sudo ufw app update "KDE Connect"
     sudo ufw allow "KDE Connect"
 
