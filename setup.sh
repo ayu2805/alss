@@ -192,6 +192,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
     gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
     gsettings set org.gnome.desktop.interface show-battery-percentage true
+    gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.peripherals.touchpad speed 0.4
     gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
@@ -251,6 +252,7 @@ setup_kde(){
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
+    sudo cp kde/30-touchpad.conf /etc/X11/xorg.conf.d/
 
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
@@ -301,6 +303,7 @@ setup_xfce(){
     sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
     sudo cp xfce/lightdm-gtk-greeter.conf /etc/lightdm/
     sudo systemctl enable lightdm
+    sudo cp xfce/30-touchpad.conf /etc/X11/xorg.conf.d/
 
     echo ""
     read -r -p "Do you want to install Colloid GTK Theme? [y/N] " response
