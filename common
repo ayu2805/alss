@@ -2,7 +2,6 @@ accountsservice
 android-tools
 archlinux-wallpaper
 aria2
-ascii
 btrfs-progs
 cups-pdf
 dosfstools
@@ -21,9 +20,6 @@ git
 gtk-engine-murrine
 gutenprint
 inetutils
-jdk-openjdk
-libreoffice-fresh
-libsecret
 mesa
 mtools
 neofetch
@@ -36,7 +32,6 @@ noto-fonts-extra
 ntfs-3g
 p7zip
 power-profiles-daemon
-python-pipx
 samba
 squashfs-tools
 sshfs
