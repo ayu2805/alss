@@ -115,7 +115,6 @@ sudo ufw allow SSH
 sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
-pipx ensurepath
 
 echo "127.0.0.1\tlocalhost
 127.0.1.1\t$(hostname)
@@ -124,8 +123,6 @@ echo "127.0.0.1\tlocalhost
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
-
-#register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
 
 echo ""
 read -r -p "Do you want to create a Samba Shared folder? [y/N] " response
