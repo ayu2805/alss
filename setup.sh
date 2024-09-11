@@ -177,7 +177,7 @@ setup_gnome(){
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.4
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
     #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
