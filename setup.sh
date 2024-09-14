@@ -382,7 +382,7 @@ else
         echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a /etc/pacman.d/custom > /dev/null
         sudo pacman -Syu
 
-        if [ "$(pactree -r yay || pactree -r yay-bin)" ]; then
+        if [ "$(pactree -r yay)" ]; then
             true
         else
             sudo pacman -S --needed --noconfirm yay
@@ -390,18 +390,19 @@ else
     fi
 fi
 
-if [ "$(pactree -r yay || pactree -r yay-bin)" ]; then
+if [ "$(pactree -r yay)" ]; then
     true
 else
     sudo pacman -S --needed --noconfirm git base-devel
-    git clone https://aur.archlinux.org/yay-bin.git --depth=1
-    cd yay-bin
+    git clone https://aur.archlinux.org/yay.git --depth=1
+    cd yay
     yes | makepkg -si
     cd ..
-    rm -rf yay-bin
+    rm -rf yay
 fi
 
 yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
+yay -Yc
 
 echo ""
 read -r -p "Do you want to install Code-OSS? [y/N] " response
