@@ -324,17 +324,17 @@ while true; do
     case $REPLY in
         "1")
             setup_gnome
-	        break;;
+            break;;
         "2")
             setup_kde
-	        break;;
+	           break;;
         "3")
             setup_xfce
-	        break;;
+	           break;;
         "")
-	        break;;
-	    *)
-	    echo -e "\nInvalid choice. Please try again...";;
+	           break;;
+        *)
+            echo -e "\nInvalid choice. Please try again...";;
     esac
 done
 
