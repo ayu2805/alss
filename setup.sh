@@ -327,12 +327,12 @@ while true; do
             break;;
         "2")
             setup_kde
-	           break;;
+	       break;;
         "3")
             setup_xfce
-	           break;;
+	       break;;
         "")
-	           break;;
+	       break;;
         *)
             echo -e "\nInvalid choice. Please try again...";;
     esac
