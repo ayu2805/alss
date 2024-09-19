@@ -172,7 +172,7 @@ setup_gnome(){
     echo ""
     sudo pacman -S --needed --noconfirm - <gnome/gnome
     pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm -
-    sudo systemctl enable gdm wsdd touchegg
+    sudo systemctl enable gdm wsdd
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
