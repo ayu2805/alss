@@ -227,11 +227,6 @@ setup_gnome(){
         unzip -oq gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/
         rm gsconnect@andyholmes.github.io.zip
         gnome-extensions enable gsconnect@andyholmes.github.io
-        
-        curl -#OL https://github.com/JoseExposito/gnome-shell-extension-x11gestures/releases/latest/download/x11gestures@joseexposito.github.io.zip
-        unzip -oq x11gestures@joseexposito.github.io.zip -d ~/.local/share/gnome-shell/extensions/x11gestures@joseexposito.github.io/
-        rm x11gestures@joseexposito.github.io.zip
-        gnome-extensions enable x11gestures@joseexposito.github.io
     fi
 }
 
