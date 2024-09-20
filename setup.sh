@@ -69,11 +69,13 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     nvidia_common
 fi
 
-echo ""
-read -r -p "Do you want to install NVIDIA drivers(Maxwell+)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
-    nvidia_common
+if [ "$(pactree -r nvidia-open-dkms)" ]; then
+    echo ""
+    read -r -p "Do you want to install NVIDIA proprietary drivers(Maxwell+)? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+        nvidia_common
+    fi
 fi
 
 echo ""
