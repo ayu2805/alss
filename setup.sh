@@ -399,7 +399,7 @@ else
 fi
 
 yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
-yay -Yc
+yay -Yc --noconfirm
 
 echo ""
 read -r -p "Do you want to install Code-OSS? [y/N] " response
