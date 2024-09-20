@@ -161,6 +161,7 @@ setup_gnome(){
     sudo cp gnome/gsconnect /etc/ufw/applications.d/
     sudo ufw app update GSConnect
     sudo ufw allow GSConnect
+    echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
 
     echo ""
     echo "Installing WhiteSur Icon Theme..."
