@@ -356,12 +356,6 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo systemctl enable bluetooth
 fi
 
-echo ""
-read -r -p "Do you want to install Telegram? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm telegram-desktop
-fi
-
 sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
 sudo sed -i 's/^#MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
 sudo sed -i 's/^MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
