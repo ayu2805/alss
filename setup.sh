@@ -70,8 +70,8 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
 fi
 
 if [ "$(pactree -r nvidia-open-dkms)" ]; then
-        true
-    else
+    true
+else
     echo ""
     read -r -p "Do you want to install NVIDIA proprietary drivers(Maxwell+)? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
