@@ -17,6 +17,7 @@ foomatic-db-nonfree
 fprintd
 fuse2
 git
+git-lfs
 gtk-engine-murrine
 gutenprint
 inetutils
@@ -33,6 +34,7 @@ noto-fonts-extra
 ntfs-3g
 p7zip
 power-profiles-daemon
+repo
 samba
 squashfs-tools
 sshfs
