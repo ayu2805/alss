@@ -158,9 +158,6 @@ fi
 
 setup_gnome(){
     echo ""
-    sudo cp gnome/gsconnect /etc/ufw/applications.d/
-    sudo ufw app update GSConnect
-    sudo ufw allow GSConnect
     echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
 
     echo ""
@@ -231,6 +228,9 @@ setup_gnome(){
         echo ""
         read -r -p "Do you want to install GSConnect? [y/N] " response
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then        
+            sudo cp gnome/gsconnect /etc/ufw/applications.d/
+            sudo ufw app update GSConnect
+            sudo ufw allow GSConnect
             curl -#OL https://github.com/GSConnect/gnome-shell-extension-gsconnect/releases/latest/download/gsconnect@andyholmes.github.io.zip
             unzip -oq gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/
             rm gsconnect@andyholmes.github.io.zip
