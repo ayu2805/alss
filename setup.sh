@@ -227,11 +227,15 @@ setup_gnome(){
         rm AlphabeticalAppGrid@stuarthayhurst.shell-extension.zip
         glib-compile-schemas ~/.local/share/gnome-shell/extensions/AlphabeticalAppGrid@stuarthayhurst/schemas/
         gnome-extensions enable AlphabeticalAppGrid@stuarthayhurst
-        
-        curl -#OL https://github.com/GSConnect/gnome-shell-extension-gsconnect/releases/latest/download/gsconnect@andyholmes.github.io.zip
-        unzip -oq gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/
-        rm gsconnect@andyholmes.github.io.zip
-        gnome-extensions enable gsconnect@andyholmes.github.io
+
+        echo ""
+        read -r -p "Do you want to install GSConnect? [y/N] " response
+        if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then        
+            curl -#OL https://github.com/GSConnect/gnome-shell-extension-gsconnect/releases/latest/download/gsconnect@andyholmes.github.io.zip
+            unzip -oq gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/
+            rm gsconnect@andyholmes.github.io.zip
+            gnome-extensions enable gsconnect@andyholmes.github.io
+        fi
     fi
 }
 
