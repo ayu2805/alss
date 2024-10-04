@@ -158,9 +158,6 @@ fi
 
 setup_gnome(){
     echo ""
-    echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
-
-    echo ""
     echo "Installing WhiteSur Icon Theme..."
     echo ""
     git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git --depth=1
