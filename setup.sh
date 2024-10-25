@@ -116,6 +116,7 @@ sudo ufw enable
 sudo ufw allow IPP
 sudo ufw allow CIFS
 sudo ufw allow SSH
+sudo ufw allow Bonjour
 sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
