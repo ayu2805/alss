@@ -89,10 +89,7 @@ sudo systemctl start ufw
 sudo mkdir -p /etc/pacman.d/hooks/
 
 echo "[global]
-workgroup = WORKGROUP
 server string = Samba Server
-netbios name = $(hostname)
-
 " | sudo tee /etc/samba/smb.conf > /dev/null
 
 echo ""
@@ -132,7 +129,7 @@ ff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
 echo ""
 read -r -p "Do you want to create a Samba Shared folder? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo -e "[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nwritable = yes\nbrowsable = yes\nguest ok = no" | sudo tee -a /etc/samba/smb.conf > /dev/null
+    echo -e "[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nread only = no" | sudo tee -a /etc/samba/smb.conf > /dev/null
     rm -rf ~/Samba\ Share
     mkdir ~/Samba\ Share
     sudo systemctl restart smb nmb
