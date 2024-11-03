@@ -154,6 +154,34 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     git config --global commit.gpgsign true
 fi
 
+touchpadConfig="Section "InputClass"
+    Identifier "libinput touchpad catchall"
+    MatchIsTouchpad "on"
+    MatchDevicePath "/dev/input/event*"
+    Driver "libinput"
+
+    Option "Tapping" "on"
+    Option "NaturalScrolling" "on"
+    Option "DisableWhileTyping" "on"
+    Option "NaturalScrolling" "true"
+EndSection"
+
+kdeconnect="[KDE Connect]
+title=Enabling communication between all your devices
+description=Multi-platform app that allows your devices to communicate
+ports=1716:1764/tcp|1716:1764/udp"
+
+gsconnect="[GSConnect]
+title=KDE Connect implementation for GNOME
+description=GSConnect is a complete implementation of KDE Connect
+ports=1716:1764/tcp|1716:1764/udp"
+
+lgg="[greeter]
+theme-name = Materia-dark
+indicators = ~clock;~spacer;~session;~power
+icon-theme-name = Papirus-Dark
+clock-format = %A, %d %B %Y, %H:%M:%S"
+
 setup_gnome(){
     echo ""
     echo "Installing WhiteSur Icon Theme..."
@@ -223,7 +251,7 @@ setup_gnome(){
         echo ""
         read -r -p "Do you want to install GSConnect? [y/N] " response
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then        
-            sudo cp gnome/gsconnect /etc/ufw/applications.d/
+            echo "$gsconnect" | sudo tee /etc/ufw/applications.d/gsconnect > /dev/null
             sudo ufw app update GSConnect
             sudo ufw allow GSConnect
             curl -#OL https://github.com/GSConnect/gnome-shell-extension-gsconnect/releases/latest/download/gsconnect@andyholmes.github.io.zip
@@ -236,20 +264,20 @@ setup_gnome(){
 
 setup_kde(){
     echo ""
-    sudo cp kde/kdeconnect /etc/ufw/applications.d/
+    echo "$kdeconnect" | sudo tee /etc/ufw/applications.d/kdeconnect > /dev/null
     sudo ufw app update "KDE Connect"
     sudo ufw allow "KDE Connect"
 
     echo ""
     echo "Installing KDE..."
     echo ""
-    sudo pacman -S --needed --noconfirm - <kde/kde
+    sudo pacman -S --needed --noconfirm - <kde
     sudo mkdir -p /etc/sddm.conf.d/
     echo -e "[General]\nNumlock=on\nInputMethod=qtvirtualkeyboard\n\n[Theme]\nCurrent=breeze\nCursorTheme=breeze_cursors" | sudo tee /etc/sddm.conf.d/kde_settings.conf > /dev/null
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
-    sudo cp kde/30-touchpad.conf /etc/X11/xorg.conf.d/
+    echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
 
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
@@ -274,7 +302,7 @@ setup_xfce(){
     echo ""
     echo "Installing XFCE..."
     echo ""
-    sudo pacman -S --needed --noconfirm - <xfce/xfce
+    sudo pacman -S --needed --noconfirm - <xfce
     xfconf-query -c xfwm4 -p /general/button_layout -n -t string -s "|HMC"
     xfconf-query -c xfwm4 -p /general/raise_with_any_button -n -t bool -s false
     xfconf-query -c xfwm4 -p /general/mousewheel_rollup -n -t bool -s false
@@ -298,9 +326,10 @@ setup_xfce(){
     xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 100
     xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
     sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
-    sudo cp xfce/lightdm-gtk-greeter.conf /etc/lightdm/
+    echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
+
     sudo systemctl enable lightdm
-    sudo cp xfce/30-touchpad.conf /etc/X11/xorg.conf.d/
+    echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
 
     echo ""
     read -r -p "Do you want to install Colloid GTK Theme? [y/N] " response
