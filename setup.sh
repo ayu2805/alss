@@ -46,13 +46,12 @@ fi
 echo ""
 read -r -p "Do you want to install AMD drivers? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm xf86-video-amdgpu libva-mesa-driver vulkan-radeon
+    sudo pacman -S --needed --noconfirm libva-mesa-driver vulkan-radeon
 fi
 
 nvidia_common(){
-    echo -e "options nvidia-drm modeset=1 fbdev=1\noptions nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
-    sudo sed -i 's/MODULES=\(.*\)/MODULES=\(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-    sudo mkinitcpio -P
+    sudo pacman -S --needed --noconfirm nvidia-prime opencl-nvidia switcheroo-control
+    echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
 
     echo ""
@@ -65,7 +64,7 @@ nvidia_common(){
 echo ""
 read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+    sudo pacman -S --needed --noconfirm nvidia-open-dkms
     nvidia_common
 fi
 
@@ -75,7 +74,7 @@ else
     echo ""
     read -r -p "Do you want to install NVIDIA proprietary drivers(Maxwell+)? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        sudo pacman -S --needed --noconfirm nvidia-dkms nvidia-settings nvidia-prime opencl-nvidia switcheroo-control
+        sudo pacman -S --needed --noconfirm nvidia-dkms
         nvidia_common
     fi
 fi
