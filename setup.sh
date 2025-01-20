@@ -153,7 +153,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     git config --global commit.gpgsign true
 fi
 
-touchpadConfig="Section "InputClass"
+touchpadConfig='Section "InputClass"
     Identifier "libinput touchpad catchall"
     MatchIsTouchpad "on"
     MatchDevicePath "/dev/input/event*"
@@ -163,7 +163,7 @@ touchpadConfig="Section "InputClass"
     Option "NaturalScrolling" "on"
     Option "DisableWhileTyping" "on"
     Option "NaturalScrolling" "true"
-EndSection"
+EndSection'
 
 kdeconnect="[KDE Connect]
 title=Enabling communication between all your devices
