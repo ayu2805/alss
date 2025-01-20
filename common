@@ -36,6 +36,7 @@ p7zip
 power-profiles-daemon
 repo
 samba
+sof-firmware
 squashfs-tools
 sshfs
 system-config-printer
