@@ -428,14 +428,9 @@ yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
 yay -Yc --noconfirm
 
 echo ""
-read -r -p "Do you want to install Code-OSS? [y/N] " response
+read -r -p "Do you want to install Visual Studio Code(from AUR)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm code
-    echo ""
-    read -r -p "Do you want to install proprietary VSCode marketplace? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yay -S --needed --noconfirm code-marketplace
-    fi
+    yay -S --needed --noconfirm visual-studio-code-bin
 fi
 
 echo ""
