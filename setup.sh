@@ -142,15 +142,8 @@ grep -qF "set wrap!" /etc/xdg/nvim/sysinit.vim || echo "set wrap!" | sudo tee -a
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    read -p "Enter your Git name: " git_name
-    read -p "Enter your Git email: " git_email
-    git config --global user.name "$git_name"
-    git config --global user.email "$git_email"
-    git config --global init.defaultBranch main
-    ssh-keygen
-    git config --global gpg.format ssh
-    git config --global user.signingkey /home/$(whoami)/.ssh/id_ed25519.pub
-    git config --global commit.gpgsign true
+    echo ""
+    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/72b96f02af0eca564af8dae62d30a5da/raw/git-config)"
 fi
 
 touchpadConfig='Section "InputClass"
