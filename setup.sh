@@ -200,7 +200,6 @@ setup_gnome(){
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
     gsettings set org.gnome.desktop.datetime automatic-timezone true
     gsettings set org.gnome.desktop.interface clock-format '24h'
-    gsettings set org.gnome.desktop.interface clock-show-seconds true
     gsettings set org.gnome.desktop.interface clock-show-weekday true
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     #gsettings set org.gnome.desktop.interface enable-hot-corners false
