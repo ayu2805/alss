@@ -9,10 +9,13 @@ gnome-connections
 gnome-contacts
 gnome-maps
 gnome-music
+gnome-remote-desktop
 gnome-text-editor
 gnome-tour
 gnome-user-docs
+gnome-user-share
 gnome-weather
+rygel
 simple-scan
 snapshot
 totem
