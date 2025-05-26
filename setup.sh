@@ -118,14 +118,6 @@ sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
 
-echo "127.0.0.1\tlocalhost
-127.0.1.1\t$(hostname)
-
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters" | sudo tee /etc/hosts > /dev/null
-
 echo ""
 read -r -p "Do you want to create a Samba Shared folder? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
