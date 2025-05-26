@@ -49,8 +49,10 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm libva-mesa-driver vulkan-radeon
 fi
 
-nvidia_common(){
-    sudo pacman -S --needed --noconfirm nvidia-prime opencl-nvidia switcheroo-control
+echo ""
+read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-prime opencl-nvidia switcheroo-control
     echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
 
@@ -58,24 +60,6 @@ nvidia_common(){
     read -r -p "Do you want to enable NVIDIA's Dynamic Boost(Ampere+)? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo systemctl enable nvidia-powerd
-    fi
-}
-
-echo ""
-read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-open-dkms
-    nvidia_common
-fi
-
-if [ "$(pactree -r nvidia-open-dkms)" ]; then
-    true
-else
-    echo ""
-    read -r -p "Do you want to install NVIDIA proprietary drivers(Maxwell+)? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        sudo pacman -S --needed --noconfirm nvidia-dkms
-        nvidia_common
     fi
 fi
 
@@ -87,16 +71,6 @@ sudo systemctl enable avahi-daemon.socket cups.socket power-profiles-daemon sshd
 sudo systemctl start ufw
 
 sudo mkdir -p /etc/pacman.d/hooks/
-
-echo "[global]
-server string = Samba Server
-" | sudo tee /etc/samba/smb.conf > /dev/null
-
-echo ""
-sudo smbpasswd -a $(whoami)
-echo ""
-sudo systemctl enable smb nmb
-
 echo "[Trigger]
 Operation = Install
 Operation = Upgrade
@@ -108,6 +82,15 @@ Target = gutenprint
 Depends = gutenprint
 When = PostTransaction
 Exec = /usr/bin/cups-genppdupdate" | sudo tee /etc/pacman.d/hooks/gutenprint.hook > /dev/null
+
+echo "[global]
+server string = Samba Server
+" | sudo tee /etc/samba/smb.conf > /dev/null
+
+echo ""
+sudo smbpasswd -a $(whoami)
+echo ""
+sudo systemctl enable smb nmb
 
 sudo ufw enable
 sudo ufw allow IPP
