@@ -1,6 +1,5 @@
 ark
 colord-kde
-dolphin
 dolphin-plugins
 ffmpegthumbs
 fwupd
@@ -24,4 +23,3 @@ plasma
 qt6-imageformats
 spectacle
 vlc
-xwaylandvideobridge
