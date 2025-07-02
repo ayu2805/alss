@@ -192,9 +192,6 @@ setup_gnome(){
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
     gsettings set org.gnome.desktop.sound allow-volume-above-100-percent 'true'
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
-    gsettings set org.gnome.mutter center-new-windows true
-    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
-    gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
     echo ""
