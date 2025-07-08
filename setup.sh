@@ -252,7 +252,7 @@ setup_kde(){
     echo ""
     read -r -p "Do you want to Touchpad configuration? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{print substr($0, 19)}')
+        touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
         vendor_id=$(echo $touchpad_id | awk '{print substr($2, 1, 4)}')
         product_id=$(echo $touchpad_id | awk '{print substr($2, 6, 9)}')
         vendor_id_dec=$(printf "%d" 0x$vendor_id)
