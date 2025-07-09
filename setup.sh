@@ -430,6 +430,8 @@ read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo ""
     bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/7ad8100b15699605fbf50291af8df16c/raw/warp-update)"
+    echo "Waiting for warp-svc.service to start..."
+    sleep 3
     warp-cli --accept-tos generate-completions fish | sudo tee /etc/fish/completions/warp-cli.fish > /dev/null
 fi
 
