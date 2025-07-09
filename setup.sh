@@ -191,7 +191,7 @@ setup_gnome(){
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
     gsettings set org.gnome.desktop.datetime automatic-timezone true
@@ -205,13 +205,15 @@ setup_gnome(){
     gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
-    gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
+    gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     gsettings set org.gnome.desktop.privacy old-files-age uint32\ 7
     gsettings set org.gnome.desktop.privacy remember-recent-files false
     gsettings set org.gnome.desktop.privacy remove-old-temp-files true
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent 'true'
+    #gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+    gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
     echo ""
