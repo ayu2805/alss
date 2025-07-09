@@ -63,6 +63,26 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     fi
 fi
 
+if [ $swapon ]; then
+    echo ""
+    read -r -p "Do you want to have swap space(swapfile with hibernate)? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        if [ "$(df -T / | awk 'NR==2{print $2}')" == "ext4" ]; then
+            RAM_SIZE=$(free --giga | awk 'NR==2{print $2}')
+            SWAP_SIZE=$((RAM_SIZE * 2))
+            sudo mkswap -U clear --size ${SWAP_SIZE}G --file /swapfile
+            sudo swapon /swapfile
+            echo -e "[Swap]\nWhat=/swapfile\n\n[Install]\nWantedBy=swap.target" | sudo tee /etc/systemd/system/swapfile.swap > /dev/null
+            sudo systemctl daemon-reload
+            sudo systemctl enable swapfile.swap
+            sudo sed -i '/^HOOKS=/ { /resume/ !s/filesystems/filesystems resume/ }' /etc/mkinitcpio.conf
+            sudo mkinitcpio -P
+        else
+            echo "The filesystem type is not ext4."
+        fi
+    fi
+fi
+
 echo ""
 sudo pacman -S --needed --noconfirm - <common
 sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
