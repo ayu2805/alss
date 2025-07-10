@@ -18,6 +18,11 @@ fprintd
 fuse2
 git
 git-lfs
+gst-libav
+gst-plugins-bad
+gst-plugins-base
+gst-plugins-good
+gst-plugins-ugly
 gtk-engine-murrine
 gutenprint
 inetutils
