@@ -1,5 +1,4 @@
 baobab
-decibels
 epiphany
 evince
 gnome-calendar
@@ -7,7 +6,10 @@ gnome-characters
 gnome-clocks
 gnome-connections
 gnome-contacts
+gnome-font-viewer
+gnome-logs
 gnome-maps
+gnome-menus
 gnome-music
 gnome-remote-desktop
 gnome-text-editor
@@ -15,7 +17,10 @@ gnome-tour
 gnome-user-docs
 gnome-user-share
 gnome-weather
+grilo-plugins
+orca
 rygel
+sushi
 simple-scan
 snapshot
 totem
