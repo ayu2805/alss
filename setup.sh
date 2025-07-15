@@ -63,7 +63,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     fi
 fi
 
-if [ $swapon ]; then
+if [ -z "$(swapon --show)" ]; then
     echo ""
     read -r -p "Do you want to have swap space(swapfile with hibernate)? [y/N] " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
