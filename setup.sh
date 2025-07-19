@@ -350,6 +350,10 @@ while true; do
     esac
 done
 
+if [ "$(pactree -r gtk4)" ]; then
+    echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
+fi
+
 echo ""
 read -r -p "Do you want to install Firefox? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
