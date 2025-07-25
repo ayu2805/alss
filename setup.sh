@@ -260,7 +260,7 @@ setup_kde(){
     echo ""
     sudo pacman -S --needed --noconfirm - <kde
     sudo mkdir -p /etc/sddm.conf.d/
-    echo -e "[General]\nNumlock=on\nInputMethod=qtvirtualkeyboard\n\n[Theme]\nCurrent=breeze\nCursorTheme=breeze_cursors" | sudo tee /etc/sddm.conf.d/kde_settings.conf > /dev/null
+    echo -e "[General]\nNumlock=on\n\n[Theme]\nCurrent=breeze\nCursorTheme=breeze_cursors" | sudo tee /etc/sddm.conf.d/kde_settings.conf > /dev/null
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
