@@ -250,10 +250,10 @@ setup_gnome(){
 }
 
 setup_kde(){
-    echo ""
-    echo "$kdeconnect" | sudo tee /etc/ufw/applications.d/kdeconnect > /dev/null
-    sudo ufw app update "KDE Connect"
-    sudo ufw allow "KDE Connect"
+    #echo ""
+    #echo "$kdeconnect" | sudo tee /etc/ufw/applications.d/kdeconnect > /dev/null
+    #sudo ufw app update "KDE Connect"
+    #sudo ufw allow "KDE Connect"
 
     echo ""
     echo "Installing KDE..."
