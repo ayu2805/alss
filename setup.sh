@@ -231,27 +231,6 @@ setup_gnome(){
         gnome-extensions enable caffeine@patapon.info
         gnome-extensions enable drive-menu@gnome-shell-extensions.gcampax.github.com
         gnome-extensions enable light-style@gnome-shell-extensions.gcampax.github.com
-
-        echo ""
-        mkdir -p ~/.local/share/gnome-shell/extensions/
-        
-        curl -#OL https://github.com/stuarthayhurst/alphabetical-grid-extension/releases/latest/download/AlphabeticalAppGrid@stuarthayhurst.shell-extension.zip
-        unzip -oq AlphabeticalAppGrid@stuarthayhurst.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/AlphabeticalAppGrid@stuarthayhurst/
-        rm AlphabeticalAppGrid@stuarthayhurst.shell-extension.zip
-        glib-compile-schemas ~/.local/share/gnome-shell/extensions/AlphabeticalAppGrid@stuarthayhurst/schemas/
-        gnome-extensions enable AlphabeticalAppGrid@stuarthayhurst
-
-        echo ""
-        read -r -p "Do you want to install GSConnect? [y/N] " response
-        if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then        
-            echo "$gsconnect" | sudo tee /etc/ufw/applications.d/gsconnect > /dev/null
-            sudo ufw app update GSConnect
-            sudo ufw allow GSConnect
-            curl -#OL https://github.com/GSConnect/gnome-shell-extension-gsconnect/releases/latest/download/gsconnect@andyholmes.github.io.zip
-            unzip -oq gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/
-            rm gsconnect@andyholmes.github.io.zip
-            gnome-extensions enable gsconnect@andyholmes.github.io
-        fi
     fi
 }
 
