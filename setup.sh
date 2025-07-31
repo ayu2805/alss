@@ -224,14 +224,10 @@ setup_gnome(){
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
     echo ""
-    read -r -p "Do you want to install some extentions that can be necessary? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        echo ""
-        sudo pacman -S --needed --noconfirm gnome-shell-extension-caffeine
-        gnome-extensions enable caffeine@patapon.info
-        gnome-extensions enable drive-menu@gnome-shell-extensions.gcampax.github.com
-        gnome-extensions enable light-style@gnome-shell-extensions.gcampax.github.com
-    fi
+    sudo pacman -S --needed --noconfirm gnome-shell-extension-caffeine
+    gnome-extensions enable caffeine@patapon.info
+    gnome-extensions enable drive-menu@gnome-shell-extensions.gcampax.github.com
+    gnome-extensions enable light-style@gnome-shell-extensions.gcampax.github.com
 }
 
 setup_kde(){
