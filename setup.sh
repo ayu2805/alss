@@ -12,20 +12,18 @@ fi
 read -p "Enter your Full Name: " fn
 if [ -n "$fn" ]; then
     sudo chfn -f "$fn" "$(whoami)"
-else
-    true
 fi
 
 grep -qF "Include = /etc/pacman.d/custom" /etc/pacman.conf || echo "Include = /etc/pacman.d/custom" | sudo tee -a /etc/pacman.conf > /dev/null
 echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/pacman.d/custom > /dev/null
 
-echo ""
-read -r -p "Do you want to run reflector? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -Sy --needed --noconfirm reflector
-    echo -e "\nIt will take time to fetch the mirrors so please wait"
-    sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F [_,.] '{print $2}') -f 10
-fi
+# echo ""
+# read -r -p "Do you want to run reflector? [y/N] " response
+# if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+#     sudo pacman -Sy --needed --noconfirm reflector
+#     echo -e "\nIt will take time to fetch the mirrors so please wait"
+#     sudo reflector --save /etc/pacman.d/mirrorlist -p https -c $(echo $LANG | awk -F [_,.] '{print $2}') -f 10
+# fi
 
 echo ""
 sudo pacman -Syu --needed --noconfirm pacman-contrib
@@ -37,16 +35,14 @@ if [ "$(pactree -r linux-zen)" ]; then
     sudo pacman -S --needed --noconfirm linux-zen-headers
 fi
 
-echo ""
-read -r -p "Do you want to install Intel drivers? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm libva-intel-driver intel-media-driver vulkan-intel
-fi
+CPU_VENDOR=$(lscpu | grep "Vendor ID" | awk '{print $3}')
 
-echo ""
-read -r -p "Do you want to install AMD drivers? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+if [ "$CPU_VENDOR" == "GenuineIntel" ]; then
+    sudo pacman -S --needed --noconfirm libva-intel-driver intel-media-driver vulkan-intel
+elif [ "$CPU_VENDOR" == "AuthenticAMD" ]; then
     sudo pacman -S --needed --noconfirm libva-mesa-driver vulkan-radeon
+else
+    echo "Unknown CPU vendor"
 fi
 
 echo ""
@@ -111,7 +107,7 @@ server string = Samba Server
 echo ""
 sudo smbpasswd -a $(whoami)
 echo ""
-sudo systemctl enable smb nmb
+sudo systemctl enable smb
 
 sudo ufw enable
 sudo ufw allow IPP
@@ -128,7 +124,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo -e "[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nread only = no" | sudo tee -a /etc/samba/smb.conf > /dev/null
     rm -rf ~/Samba\ Share
     mkdir ~/Samba\ Share
-    sudo systemctl restart smb nmb
+    sudo systemctl restart smb
 fi
 
 #sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
@@ -140,6 +136,7 @@ echo ""
 if [ "$(pactree -r bluez)" ]; then
     sudo sed -i 's/^#AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
     sudo sed -i 's/^AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo systemctl enable bluetooth
 fi
 
 echo ""
@@ -161,15 +158,15 @@ touchpadConfig='Section "InputClass"
     Option "NaturalScrolling" "true"
 EndSection'
 
-kdeconnect="[KDE Connect]
-title=Enabling communication between all your devices
-description=Multi-platform app that allows your devices to communicate
-ports=1716:1764/tcp|1716:1764/udp"
+# kdeconnect="[KDE Connect]
+# title=Enabling communication between all your devices
+# description=Multi-platform app that allows your devices to communicate
+# ports=1716:1764/tcp|1716:1764/udp"
 
-gsconnect="[GSConnect]
-title=KDE Connect implementation for GNOME
-description=GSConnect is a complete implementation of KDE Connect
-ports=1716:1764/tcp|1716:1764/udp"
+# gsconnect="[GSConnect]
+# title=KDE Connect implementation for GNOME
+# description=GSConnect is a complete implementation of KDE Connect
+# ports=1716:1764/tcp|1716:1764/udp"
 
 lgg="[greeter]
 theme-name = Materia-dark
@@ -205,7 +202,6 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface clock-format '24h'
     gsettings set org.gnome.desktop.interface clock-show-weekday true
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    #gsettings set org.gnome.desktop.interface enable-hot-corners false
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
     gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
     gsettings set org.gnome.desktop.interface show-battery-percentage true
@@ -226,16 +222,9 @@ setup_gnome(){
     echo ""
     sudo pacman -S --needed --noconfirm gnome-shell-extension-caffeine
     gnome-extensions enable caffeine@patapon.info
-    gnome-extensions enable drive-menu@gnome-shell-extensions.gcampax.github.com
-    gnome-extensions enable light-style@gnome-shell-extensions.gcampax.github.com
 }
 
 setup_kde(){
-    #echo ""
-    #echo "$kdeconnect" | sudo tee /etc/ufw/applications.d/kdeconnect > /dev/null
-    #sudo ufw app update "KDE Connect"
-    #sudo ufw allow "KDE Connect"
-
     echo ""
     echo "Installing KDE..."
     echo ""
@@ -252,16 +241,14 @@ setup_kde(){
     echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | tee ~/.config/kdeglobals > /dev/null
     echo -e "[PlasmaViews][Panel 2]\nfloating=0\n\n[PlasmaViews][Panel 2][Defaults]\nthickness=40" | tee ~/.config/plasmashellrc > /dev/null
     echo -e "[General]\nconfirmLogout=false\nloginMode=emptySession" | tee ~/.config/ksmserverrc > /dev/null
-
-    echo ""
-    read -r -p "Do you want to Touchpad configuration? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
+    
+    if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
         touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
         vendor_id=$(echo $touchpad_id | awk '{print substr($2, 1, 4)}')
         product_id=$(echo $touchpad_id | awk '{print substr($2, 6, 9)}')
         vendor_id_dec=$(printf "%d" 0x$vendor_id)
         product_id_dec=$(printf "%d" 0x$product_id)
-        echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
         echo -e "\n[Libinput][$vendor_id_dec][$product_id_dec][$touchpad_id]\nNaturalScroll=true" | tee -a ~/.config/kcminputrc > /dev/null
     fi
 }
@@ -295,23 +282,18 @@ setup_xfce(){
     xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
     sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
     echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
-
     sudo systemctl enable lightdm
     echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
 
     echo ""
-    read -r -p "Do you want to install Colloid GTK Theme? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        echo ""
-        git clone https://github.com/vinceliuice/Colloid-gtk-theme.git --depth=1
-        cd Colloid-gtk-theme/
-        sudo ./install.sh
-        cd ..
-        rm -rf Colloid-gtk-theme/
+    git clone https://github.com/vinceliuice/Colloid-gtk-theme.git --depth=1
+    cd Colloid-gtk-theme/
+    sudo ./install.sh
+    cd ..
+    rm -rf Colloid-gtk-theme/
 
-        xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
-        xfconf-query -c xfwm4 -p /general/theme -n -t string -s "Colloid-Dark"
-    fi
+    xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
+    xfconf-query -c xfwm4 -p /general/theme -n -t string -s "Colloid-Dark"
 }
 
 while true; do
@@ -333,12 +315,6 @@ done
 
 if [ "$(pactree -r gtk4)" ]; then
     echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
-fi
-
-echo ""
-read -r -p "Do you want to install Firefox? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm firefox firefox-ublock-origin
 fi
 
 echo ""
@@ -386,17 +362,6 @@ fi
 
 yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
 yay -Yc --noconfirm
-
-echo ""
-read -r -p "Do you want to install Code-OSS? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm code
-    echo ""
-    read -r -p "Do you want to install proprietary VSCode marketplace? [y/N] " response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yay -S --needed --noconfirm code-marketplace
-    fi
-fi
 
 echo ""
 read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
