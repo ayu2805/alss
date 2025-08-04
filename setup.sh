@@ -324,6 +324,7 @@ echo ""
 read -r -p "Do you want to install LibreOffice(Fresh)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm libreoffice-fresh
+    xdg-mime default nvim.desktop text/plain
 fi
 
 sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
