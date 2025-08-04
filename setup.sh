@@ -133,13 +133,6 @@ grep -qF "set number" /etc/xdg/nvim/sysinit.vim || echo "set number" | sudo tee 
 grep -qF "set wrap!" /etc/xdg/nvim/sysinit.vim || echo "set wrap!" | sudo tee -a /etc/xdg/nvim/sysinit.vim > /dev/null
 
 echo ""
-if [ "$(pactree -r bluez)" ]; then
-    sudo sed -i 's/^#AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
-    sudo sed -i 's/^AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
-    sudo systemctl enable bluetooth
-fi
-
-echo ""
 read -r -p "Do you want to configure git? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo ""
@@ -312,6 +305,13 @@ while true; do
             echo -e "\nInvalid choice. Please try again...";;
     esac
 done
+
+echo ""
+if [ "$(pactree -r bluez)" ]; then
+    sudo sed -i 's/^#AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo sed -i 's/^AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
+    sudo systemctl enable bluetooth
+fi
 
 if [ "$(pactree -r gtk4)" ]; then
     echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
