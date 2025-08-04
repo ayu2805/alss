@@ -227,7 +227,6 @@ setup_kde(){
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
-    echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
 
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
@@ -237,6 +236,7 @@ setup_kde(){
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
     
     if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
+        echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
         touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
         vendor_id=$(echo $touchpad_id | awk '{print substr($2, 1, 4)}')
         product_id=$(echo $touchpad_id | awk '{print substr($2, 6, 9)}')
@@ -248,45 +248,48 @@ setup_kde(){
 
 setup_xfce(){
     echo ""
-    echo "Installing XFCE..."
-    echo ""
-    sudo pacman -S --needed --noconfirm - <xfce
-    xfconf-query -c xfwm4 -p /general/button_layout -n -t string -s "|HMC"
-    xfconf-query -c xfwm4 -p /general/raise_with_any_button -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/mousewheel_rollup -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/scroll_workspaces -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/placement_ratio -n -t int -s 100
-    xfconf-query -c xfwm4 -p /general/show_popup_shadow -n -t bool -s true
-    xfconf-query -c xfwm4 -p /general/wrap_windows -n -t bool -s false
-    xfconf-query -c xfce4-panel -p /panels/panel-1/size -n -t int -s 32
-    xfconf-query -c xfce4-panel -p /panels/panel-1/icon-size -n -t int -s 16
-    xfconf-query -c xfce4-panel -p /plugins/plugin-1/show-button-title -n -t bool -s false
-    xfconf-query -c xfce4-panel -p /plugins/plugin-1/button-icon -n -t string -s "desktop-environment-xfce"
-    #xfconf-query -c xfce4-panel -p /panels -n -t int -s 1 -a
-    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false
-    xfconf-query -c xfce4-notifyd -p /do-slideout -n -t bool -s true
-    xfconf-query -c xfce4-notifyd -p /notify-location -n -t int -s 3
-    xfconf-query -c xfce4-notifyd -p /expire-timeout -n -t int -s 5
-    xfconf-query -c xfce4-notifyd -p /initial-opacity -n -t double -s 1
-    xfconf-query -c xfce4-notifyd -p /notification-log -n -t bool -s true
-    xfconf-query -c xfce4-notifyd -p /log-level -n -t int -s 1
-    xfconf-query -c xfce4-notifyd -p /log-max-size -n -t int -s 0
-    xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 100
-    xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
-    sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
-    echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
-    sudo systemctl enable lightdm
-    echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
-
-    echo ""
     git clone https://github.com/vinceliuice/Colloid-gtk-theme.git --depth=1
     cd Colloid-gtk-theme/
     sudo ./install.sh
     cd ..
     rm -rf Colloid-gtk-theme/
-
-    xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
+    
+    echo ""
+    echo "Installing XFCE..."
+    echo ""
+    sudo pacman -S --needed --noconfirm - <xfce
+    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false
+    xfconf-query -c xfce4-notifyd -p /do-slideout -n -t bool -s true
+    xfconf-query -c xfce4-notifyd -p /expire-timeout -n -t int -s 5
+    xfconf-query -c xfce4-notifyd -p /initial-opacity -n -t double -s 1
+    xfconf-query -c xfce4-notifyd -p /log-level -n -t int -s 1
+    xfconf-query -c xfce4-notifyd -p /log-max-size -n -t int -s 0
+    xfconf-query -c xfce4-notifyd -p /notification-log -n -t bool -s true
+    xfconf-query -c xfce4-notifyd -p /notify-location -n -t int -s 3
+    #xfconf-query -c xfce4-panel -p /panels -n -t int -s 1 -a
+    xfconf-query -c xfce4-panel -p /panels/panel-1/icon-size -n -t int -s 16
+    xfconf-query -c xfce4-panel -p /panels/panel-1/size -n -t int -s 32
+    xfconf-query -c xfce4-panel -p /plugins/plugin-1/button-icon -n -t string -s "desktop-environment-xfce"
+    xfconf-query -c xfce4-panel -p /plugins/plugin-1/show-button-title -n -t bool -s false
+    xfconf-query -c xfwm4 -p /general/button_layout -n -t string -s "|HMC"
+    xfconf-query -c xfwm4 -p /general/mousewheel_rollup -n -t bool -s false
+    xfconf-query -c xfwm4 -p /general/placement_ratio -n -t int -s 100
+    xfconf-query -c xfwm4 -p /general/raise_with_any_button -n -t bool -s false
+    xfconf-query -c xfwm4 -p /general/scroll_workspaces -n -t bool -s false
+    xfconf-query -c xfwm4 -p /general/show_popup_shadow -n -t bool -s true
     xfconf-query -c xfwm4 -p /general/theme -n -t string -s "Colloid-Dark"
+    xfconf-query -c xfwm4 -p /general/wrap_windows -n -t bool -s false
+    xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
+    xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
+    xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 100
+    
+    sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
+    echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
+    sudo systemctl enable lightdm
+    
+    if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
+        echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
+    fi
 }
 
 while true; do
