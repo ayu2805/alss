@@ -167,6 +167,17 @@ indicators = ~clock;~spacer;~session;~power
 icon-theme-name = Papirus-Dark
 clock-format = %A, %d %B %Y, %H:%M:%S"
 
+sddm="[General]
+DisplayServer=wayland
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+
+[Theme]
+Current=breeze
+CursorTheme=breeze_cursors
+
+[Wayland]
+CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 --inputmethod maliit-keyboard"
+
 setup_gnome(){
     echo ""
     echo "Installing WhiteSur Icon Theme..."
@@ -223,11 +234,13 @@ setup_kde(){
     echo ""
     sudo pacman -S --needed --noconfirm - <kde
     sudo mkdir -p /etc/sddm.conf.d/
-    echo -e "[General]\nDisplayServer=wayland\nNumlock=on\n\n[Theme]\nCurrent=breeze\nCursorTheme=breeze_cursors\n\n[Wayland]\nEnableHiDPI=true" | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
+    echo -e "$sddm" | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
+    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
 
+    mkdir -p ~/.config/
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
     echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | tee ~/.config/kdeglobals > /dev/null
@@ -236,7 +249,6 @@ setup_kde(){
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
     
     if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
-        echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
         touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
         vendor_id=$(echo $touchpad_id | awk '{print substr($2, 1, 4)}')
         product_id=$(echo $touchpad_id | awk '{print substr($2, 6, 9)}')
