@@ -344,28 +344,8 @@ else
         sudo pacman -U --needed --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
         echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a /etc/pacman.d/custom > /dev/null
         sudo pacman -Syu
-
-        if [ "$(pactree -r yay)" ]; then
-            true
-        else
-            sudo pacman -S --needed --noconfirm yay
-        fi
     fi
 fi
-
-if [ "$(pactree -r yay)" ]; then
-    true
-else
-    sudo pacman -S --needed --noconfirm git base-devel
-    git clone https://aur.archlinux.org/yay.git --depth=1
-    cd yay
-    yes | makepkg -si
-    cd ..
-    rm -rf yay
-fi
-
-yay -S --answerclean A --answerdiff N --removemake --cleanafter --save
-yay -Yc --noconfirm
 
 echo ""
 read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
