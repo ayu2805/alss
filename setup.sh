@@ -128,9 +128,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
 fi
 
 #sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
-echo -e "VISUAL=nvim\nEDITOR=nvim" | sudo tee /etc/environment > /dev/null
-grep -qF "set number" /etc/xdg/nvim/sysinit.vim || echo "set number" | sudo tee -a /etc/xdg/nvim/sysinit.vim > /dev/null
-grep -qF "set wrap!" /etc/xdg/nvim/sysinit.vim || echo "set wrap!" | sudo tee -a /etc/xdg/nvim/sysinit.vim > /dev/null
+echo -e "VISUAL=nano\nEDITOR=nano" | sudo tee /etc/environment > /dev/null
 
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
@@ -178,16 +176,15 @@ CursorTheme=breeze_cursors
 [Wayland]
 CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 --inputmethod maliit-keyboard"
 
-setup_gnome(){
-    echo ""
-    echo "Installing WhiteSur Icon Theme..."
-    echo ""
-    git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git --depth=1
-    cd WhiteSur-icon-theme/
-    sudo ./install.sh -a
-    cd ..
-    rm -rf WhiteSur-icon-theme/
+nano="include "/usr/share/nano/*.nanorc"
+include "/usr/share/nano/extra/*.nanorc"
 
+set autoindent
+set constantshow
+set minibar
+set stateflags"
+
+setup_gnome(){
     echo ""
     echo "Installing Gnome..."
     echo ""
@@ -195,33 +192,40 @@ setup_gnome(){
     pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm -
     sudo systemctl enable gdm wsdd
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
+    gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
     gsettings set org.gnome.desktop.datetime automatic-timezone true
     gsettings set org.gnome.desktop.interface clock-format '24h'
     gsettings set org.gnome.desktop.interface clock-show-weekday true
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
-    gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
+    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
     gsettings set org.gnome.desktop.interface show-battery-percentage true
     gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
     #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-    gsettings set org.gnome.desktop.privacy old-files-age uint32\ 7
+    gsettings set org.gnome.desktop.privacy old-files-age 7
     gsettings set org.gnome.desktop.privacy remember-recent-files false
     gsettings set org.gnome.desktop.privacy remove-old-temp-files true
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
     #gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+    gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print', '<Shift><Super>S']"
+    gsettings get org.gnome.TextEditor discover-settings false
+    gsettings get org.gnome.TextEditor indent-width 4
+    gsettings get org.gnome.TextEditor restore-session false
+    gsettings get org.gnome.TextEditor tab-width 4
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
+    echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
 }
 
 setup_kde(){
@@ -332,7 +336,6 @@ echo ""
 read -r -p "Do you want to install LibreOffice(Fresh)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm libreoffice-fresh
-    xdg-mime default nvim.desktop text/plain
 fi
 
 sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
@@ -370,5 +373,6 @@ shortcuts=file:, file:///home/ap, file:///home/ap/Desktop, file:///home/ap/Docum
 sidebarWidth=110
 viewMode=Detail" sudo tee ~/.config/QtProject.conf > /dev/null
 
+rm -f ~/.bash*
 echo ""
 echo "You can now reboot your system"

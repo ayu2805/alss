@@ -28,7 +28,7 @@ gtk-engine-murrine
 gutenprint
 inetutils
 mesa
-neovim
+nano
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -45,6 +45,4 @@ ufw
 unrar
 unzip
 vulkan-mesa-layers
-wl-clipboard
-xclip
 yt-dlp
