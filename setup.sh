@@ -218,10 +218,10 @@ setup_gnome(){
     #gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
     gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print', '<Shift><Super>S']"
-    gsettings get org.gnome.TextEditor discover-settings false
-    gsettings get org.gnome.TextEditor indent-width 4
-    gsettings get org.gnome.TextEditor restore-session false
-    gsettings get org.gnome.TextEditor tab-width 4
+    gsettings set org.gnome.TextEditor discover-settings false
+    gsettings set org.gnome.TextEditor indent-width 4
+    gsettings set org.gnome.TextEditor restore-session false
+    gsettings set org.gnome.TextEditor tab-width 4
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
