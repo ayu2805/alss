@@ -329,7 +329,7 @@ if [ "$(pactree -r bluez)" ]; then
 fi
 
 if [ "$(pactree -r gtk4)" ]; then
-    echo -e "GSK_RENDERER=gl" | sudo tee -a /etc/environment > /dev/null
+    echo -e "GSK_RENDERER=ngl" | sudo tee -a /etc/environment > /dev/null
 fi
 
 echo ""
