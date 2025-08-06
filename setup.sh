@@ -222,10 +222,6 @@ setup_gnome(){
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
-
-    echo ""
-    sudo pacman -S --needed --noconfirm gnome-shell-extension-caffeine
-    gnome-extensions enable caffeine@patapon.info
 }
 
 setup_kde(){
