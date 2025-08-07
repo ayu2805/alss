@@ -223,6 +223,8 @@ setup_gnome(){
     gsettings set org.gnome.TextEditor restore-session false
     gsettings set org.gnome.TextEditor tab-width 4
     gsettings set org.gnome.TextEditor wrap-text false
+    gsettings set org.gnome.TextEditor highlight-current-line true
+    gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
