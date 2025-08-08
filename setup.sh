@@ -191,15 +191,18 @@ setup_gnome(){
     sudo pacman -S --needed --noconfirm - <gnome/gnome
     pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm -
     sudo systemctl enable gdm wsdd
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-    #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
+    gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ categories "['AudioVideo', 'Development', 'Graphics',  'Network',  'Utility']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ name 'Utilities'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ translate true
     gsettings set org.gnome.desktop.datetime automatic-timezone true
     gsettings set org.gnome.desktop.interface clock-format '24h'
     gsettings set org.gnome.desktop.interface clock-show-weekday true
@@ -215,29 +218,26 @@ setup_gnome(){
     gsettings set org.gnome.desktop.privacy remember-recent-files false
     gsettings set org.gnome.desktop.privacy remove-old-temp-files true
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-    #gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
+    gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+    gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop']"
     gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print', '<Shift><Super>S']"
     gsettings set org.gnome.TextEditor discover-settings false
+    gsettings set org.gnome.TextEditor highlight-current-line true
     gsettings set org.gnome.TextEditor indent-width 4
     gsettings set org.gnome.TextEditor restore-session false
+    gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.TextEditor tab-width 4
     gsettings set org.gnome.TextEditor wrap-text false
-    gsettings set org.gnome.TextEditor highlight-current-line true
-    gsettings set org.gnome.TextEditor show-line-numbers true
-    gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ name 'Utilities'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ translate true
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Utilities/ categories "['AudioVideo', 'Development', 'Graphics',  'Network',  'Utility']"
-    gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop']"
-    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
+    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
+    #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
 }
@@ -261,6 +261,7 @@ setup_kde(){
     echo -e "[General]\nconfirmLogout=false\nloginMode=emptySession" | tee ~/.config/ksmserverrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
     echo -e "[Plugins]\nshakecursorEnabled=false\nzoomEnabled=false" | tee ~/.config/kwinrc > /dev/null
+    echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
     
     if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
         touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
@@ -308,6 +309,7 @@ setup_xfce(){
     xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
     xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
     xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 100
+    echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
     
     sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
     echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
