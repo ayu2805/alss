@@ -128,7 +128,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
 fi
 
 #sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
-echo -e "VISUAL=nano\nEDITOR=nano" | sudo tee /etc/environment > /dev/null
+echo -e "VISUAL=nano\nEDITOR=nano\nPAGER=more" | sudo tee /etc/environment > /dev/null
 
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
