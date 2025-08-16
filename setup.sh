@@ -182,7 +182,8 @@ include "/usr/share/nano/extra/*.nanorc"
 set autoindent
 set constantshow
 set minibar
-set stateflags"
+set stateflags
+set tabsize 4"
 
 setup_gnome(){
     echo ""
