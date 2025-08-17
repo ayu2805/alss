@@ -100,18 +100,8 @@ Depends = gutenprint
 When = PostTransaction
 Exec = /usr/bin/cups-genppdupdate" | sudo tee /etc/pacman.d/hooks/gutenprint.hook > /dev/null
 
-echo "[global]
-server string = Samba Server
-" | sudo tee /etc/samba/smb.conf > /dev/null
-
-echo ""
-sudo smbpasswd -a $(whoami)
-echo ""
-sudo systemctl enable smb
-
 sudo ufw enable
 sudo ufw allow IPP
-sudo ufw allow CIFS
 sudo ufw allow SSH
 sudo ufw allow Bonjour
 sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
@@ -119,12 +109,16 @@ sudo chsh -s /usr/bin/fish $(whoami)
 sudo chsh -s /usr/bin/fish
 
 echo ""
-read -r -p "Do you want to create a Samba Shared folder? [y/N] " response
+read -r -p "Do you want to setup Samba? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    sudo pacman -S --needed --noconfirm samba
+    echo -e "[global]\nserver string = Samba Server\n" | sudo tee /etc/samba/smb.conf > /dev/null
+    sudo smbpasswd -a $(whoami)
+    sudo ufw allow CIFS
     echo -e "[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nread only = no" | sudo tee -a /etc/samba/smb.conf > /dev/null
     rm -rf ~/Samba\ Share
     mkdir ~/Samba\ Share
-    sudo systemctl restart smb
+    sudo systemctl enable smb
 fi
 
 #sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc

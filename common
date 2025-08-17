@@ -40,7 +40,6 @@ python-mutagen
 qt6-5compat
 qt6-base
 repo
-samba
 system-config-printer
 ttf-liberation
 ufw
