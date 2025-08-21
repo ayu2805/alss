@@ -183,8 +183,7 @@ setup_gnome(){
     echo ""
     echo "Installing Gnome..."
     echo ""
-    sudo pacman -S --needed --noconfirm --disable-download-timeout - <gnome/gnome
-    pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm --disable-download-timeout -
+    sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove) - <gnome/gnome
     sudo systemctl enable gdm wsdd
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
