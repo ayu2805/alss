@@ -184,7 +184,7 @@ setup_gnome(){
     echo "Installing Gnome..."
     echo ""
     sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove) - <gnome/gnome
-    sudo systemctl enable gdm wsdd
+    sudo systemctl enable gdm
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
     gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
@@ -376,7 +376,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/7ad8100b15699605fbf50291af8df16c/raw/warp-update)"
     echo "Waiting for warp-svc.service to start..."
     sleep 1
-    warp-cli --accept-tos generate-completions fish | sudo tee /usr/share/fish/completions/warp-cli.fish > /dev/null
+    warp-cli generate-completions fish | sudo tee /usr/share/fish/completions/warp-cli.fish > /dev/null
 fi
 
 echo "[FileDialog]
