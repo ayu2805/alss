@@ -28,19 +28,19 @@ echo -e "[options]\nColor\nParallelDownloads = 5\nILoveCandy\n" | sudo tee /etc/
 echo ""
 sudo pacman -Syu --needed --noconfirm pacman-contrib
 if [ "$(pactree -r linux)" ]; then
-    sudo pacman -S --needed --noconfirm linux-headers
+    sudo pacman -S --needed --noconfirm --disable-download-timeout linux-headers
 fi
 
 if [ "$(pactree -r linux-zen)" ]; then
-    sudo pacman -S --needed --noconfirm linux-zen-headers
+    sudo pacman -S --needed --noconfirm --disable-download-timeout linux-zen-headers
 fi
 
 CPU_VENDOR=$(lscpu | grep "Vendor ID" | awk '{print $3}')
 
 if [ "$CPU_VENDOR" == "GenuineIntel" ]; then
-    sudo pacman -S --needed --noconfirm libva-intel-driver intel-media-driver vulkan-intel
+    sudo pacman -S --needed --noconfirm --disable-download-timeout libva-intel-driver intel-media-driver vulkan-intel
 elif [ "$CPU_VENDOR" == "AuthenticAMD" ]; then
-    sudo pacman -S --needed --noconfirm libva-mesa-driver vulkan-radeon
+    sudo pacman -S --needed --noconfirm --disable-download-timeout libva-mesa-driver vulkan-radeon
 else
     echo "Unknown CPU vendor"
 fi
@@ -48,7 +48,7 @@ fi
 echo ""
 read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm nvidia-open-dkms nvidia-prime opencl-nvidia switcheroo-control
+    sudo pacman -S --needed --noconfirm --disable-download-timeout nvidia-open-dkms nvidia-prime opencl-nvidia switcheroo-control
     echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
     sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
 
@@ -81,7 +81,7 @@ if [ -z "$(swapon --show)" ]; then
 fi
 
 echo ""
-sudo pacman -S --needed --noconfirm - <common
+sudo pacman -S --needed --noconfirm --disable-download-timeout - <common
 sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
 sudo systemctl disable systemd-resolved.service
 sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd ufw
@@ -111,7 +111,7 @@ sudo chsh -s /usr/bin/fish
 echo ""
 read -r -p "Do you want to setup Samba? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm samba
+    sudo pacman -S --needed --noconfirm --disable-download-timeout samba
     echo -e "[global]\nserver string = Samba Server\n" | sudo tee /etc/samba/smb.conf > /dev/null
     sudo smbpasswd -a $(whoami)
     sudo ufw allow CIFS
@@ -183,8 +183,8 @@ setup_gnome(){
     echo ""
     echo "Installing Gnome..."
     echo ""
-    sudo pacman -S --needed --noconfirm - <gnome/gnome
-    pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm -
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - <gnome/gnome
+    pacman -Sgq gnome | grep -vf gnome/remove | sudo pacman -S --needed --noconfirm --disable-download-timeout -
     sudo systemctl enable gdm wsdd
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
@@ -242,7 +242,7 @@ setup_kde(){
     echo ""
     echo "Installing KDE..."
     echo ""
-    sudo pacman -S --needed --noconfirm - <kde
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - <kde
     sudo mkdir -p /etc/sddm.conf.d/
     echo -e "$sddm" | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
@@ -280,7 +280,7 @@ setup_xfce(){
     echo ""
     echo "Installing XFCE..."
     echo ""
-    sudo pacman -S --needed --noconfirm - <xfce
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - <xfce
     xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false
     xfconf-query -c xfce4-notifyd -p /do-slideout -n -t bool -s true
     xfconf-query -c xfce4-notifyd -p /expire-timeout -n -t int -s 5
@@ -347,7 +347,7 @@ fi
 echo ""
 read -r -p "Do you want to install LibreOffice(Fresh)? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm libreoffice-fresh
+    sudo pacman -S --needed --noconfirm --disable-download-timeout libreoffice-fresh
 fi
 
 sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf
