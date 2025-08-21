@@ -153,12 +153,6 @@ EndSection'
 # description=GSConnect is a complete implementation of KDE Connect
 # ports=1716:1764/tcp|1716:1764/udp"
 
-lgg="[greeter]
-theme-name = Materia-dark
-indicators = ~clock;~spacer;~session;~power
-icon-theme-name = Papirus-Dark
-clock-format = %A, %d %B %Y, %H:%M:%S"
-
 sddm="[General]
 DisplayServer=wayland
 GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
@@ -268,63 +262,14 @@ setup_kde(){
     fi
 }
 
-setup_xfce(){
-    echo ""
-    git clone https://github.com/vinceliuice/Colloid-gtk-theme.git --depth=1
-    cd Colloid-gtk-theme/
-    sudo ./install.sh
-    cd ..
-    rm -rf Colloid-gtk-theme/
-    
-    echo ""
-    echo "Installing XFCE..."
-    echo ""
-    sudo pacman -S --needed --noconfirm --disable-download-timeout - <xfce
-    xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-filesystem -n -t bool -s false
-    xfconf-query -c xfce4-notifyd -p /do-slideout -n -t bool -s true
-    xfconf-query -c xfce4-notifyd -p /expire-timeout -n -t int -s 5
-    xfconf-query -c xfce4-notifyd -p /initial-opacity -n -t double -s 1
-    xfconf-query -c xfce4-notifyd -p /log-level -n -t int -s 1
-    xfconf-query -c xfce4-notifyd -p /log-max-size -n -t int -s 0
-    xfconf-query -c xfce4-notifyd -p /notification-log -n -t bool -s true
-    xfconf-query -c xfce4-notifyd -p /notify-location -n -t int -s 3
-    #xfconf-query -c xfce4-panel -p /panels -n -t int -s 1 -a
-    xfconf-query -c xfce4-panel -p /panels/panel-1/icon-size -n -t int -s 16
-    xfconf-query -c xfce4-panel -p /panels/panel-1/size -n -t int -s 32
-    xfconf-query -c xfce4-panel -p /plugins/plugin-1/button-icon -n -t string -s "desktop-environment-xfce"
-    xfconf-query -c xfce4-panel -p /plugins/plugin-1/show-button-title -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/button_layout -n -t string -s "|HMC"
-    xfconf-query -c xfwm4 -p /general/mousewheel_rollup -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/placement_ratio -n -t int -s 100
-    xfconf-query -c xfwm4 -p /general/raise_with_any_button -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/scroll_workspaces -n -t bool -s false
-    xfconf-query -c xfwm4 -p /general/show_popup_shadow -n -t bool -s true
-    xfconf-query -c xfwm4 -p /general/theme -n -t string -s "Colloid-Dark"
-    xfconf-query -c xfwm4 -p /general/wrap_windows -n -t bool -s false
-    xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark"
-    xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Colloid-Dark"
-    xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 100
-    echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
-    
-    sudo sed -i 's/^#greeter-setup-script=.*/greeter-setup-script=\/usr\/bin\/numlockx on/' /etc/lightdm/lightdm.conf
-    echo "$lgg" | sudo tee /etc/lightdm/lightdm-gtk-greeter.conf > /dev/null
-    sudo systemctl enable lightdm
-    
-    if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
-        echo "$touchpadConfig" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf > /dev/null
-    fi
-}
-
 while true; do
-    echo -e "1) Gnome\n2) KDE\n3) XFCE"
+    echo -e "1) Gnome\n2) KDE"
     read -p "Select Desktop Environment(or press enter to skip): "
     case $REPLY in
         "1")
             setup_gnome;break;;
         "2")
             setup_kde;break;;
-        "3")
-            setup_xfce;break;;
         "")
             break;;
         *)
@@ -341,12 +286,6 @@ fi
 
 if [ "$(pactree -r gtk4)" ]; then
     echo -e "GSK_RENDERER=ngl" | sudo tee -a /etc/environment > /dev/null
-fi
-
-echo ""
-read -r -p "Do you want to install LibreOffice(Fresh)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    sudo pacman -S --needed --noconfirm --disable-download-timeout libreoffice-fresh
 fi
 
 sudo sed -i "s/^PKGEXT.*/PKGEXT=\'.pkg.tar\'/" /etc/makepkg.conf

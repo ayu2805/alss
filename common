@@ -1,4 +1,3 @@
-accountsservice
 android-tools
 aria2
 code
@@ -16,17 +15,15 @@ foomatic-db
 foomatic-db-engine
 foomatic-db-nonfree
 fprintd
-fuse2
 git
-git-lfs
 gst-libav
 gst-plugins-bad
 gst-plugins-base
 gst-plugins-good
 gst-plugins-ugly
-gtk-engine-murrine
 gutenprint
 inetutils
+libreoffice-fresh
 mesa
 nano
 noto-fonts
@@ -39,8 +36,6 @@ power-profiles-daemon
 python-mutagen
 qt6-5compat
 qt6-base
-repo
-system-config-printer
 ttf-liberation
 ufw
 unrar
