@@ -209,6 +209,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
     gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+    gsettings set org.gnome.SessionManager logout-prompt false
     gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop']"
     gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print', '<Shift><Super>S']"
     gsettings set org.gnome.TextEditor discover-settings false
@@ -227,6 +228,7 @@ setup_gnome(){
     #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    sudo -u gdm dbus-launch gsettings set org.gnome.SessionManager logout-prompt false
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
 }
