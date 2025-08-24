@@ -38,7 +38,7 @@ fi
 CPU_VENDOR=$(lscpu | grep "Vendor ID" | awk '{print $3}')
 
 if [ "$CPU_VENDOR" == "GenuineIntel" ]; then
-    sudo pacman -S --needed --noconfirm --disable-download-timeout libva-intel-driver intel-media-driver vulkan-intel
+    sudo pacman -S --needed --noconfirm --disable-download-timeout intel-media-driver vulkan-intel
 elif [ "$CPU_VENDOR" == "AuthenticAMD" ]; then
     sudo pacman -S --needed --noconfirm --disable-download-timeout libva-mesa-driver vulkan-radeon
 else
