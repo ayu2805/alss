@@ -30,6 +30,7 @@ nss-mdns
 ntfs-3g
 power-profiles-daemon
 python-mutagen
+python-dbus
 qt6-5compat
 qt6-base
 ttf-liberation
