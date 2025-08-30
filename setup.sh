@@ -128,7 +128,7 @@ echo ""
 read -r -p "Do you want to configure git? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo ""
-    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/72b96f02af0eca564af8dae62d30a5da/raw/git-config)"
+    bash -c "$(curl -Ss hhttps://raw.githubusercontent.com/ayu2805/alss/main/git-config)"
 fi
 
 touchpadConfig='Section "InputClass"
