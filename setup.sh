@@ -127,8 +127,7 @@ echo -e "VISUAL=nano\nEDITOR=nano\nPAGER=more" | sudo tee /etc/environment > /de
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo ""
-    bash -c "$(curl -Ss hhttps://raw.githubusercontent.com/ayu2805/alss/main/git-config)"
+    ./git-config
 fi
 
 touchpadConfig='Section "InputClass"
