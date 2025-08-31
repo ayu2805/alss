@@ -123,6 +123,8 @@ fi
 
 #sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 echo -e "VISUAL=nano\nEDITOR=nano\nPAGER=more" | sudo tee /etc/environment > /dev/null
+mkdir -p "/home/$(whoami)/.config/Code - OSS/User/"
+curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | tee "/home/$(whoami)/.config/Code - OSS/User/settings.json" > /dev/null
 
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
