@@ -229,6 +229,7 @@ setup_gnome(){
     sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     sudo -u gdm dbus-launch gsettings set org.gnome.SessionManager logout-prompt false
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
+    xdg-mime default org.gnome.TextEditor.desktop application/json
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
 }
 
