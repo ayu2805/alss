@@ -1,5 +1,6 @@
 android-tools
 aria2
+clang
 code
 cups-pdf
 devtools
@@ -23,6 +24,7 @@ gst-plugins-ugly
 gutenprint
 inetutils
 libreoffice-fresh
+llvm
 nano
 noto-fonts
 noto-fonts-cjk
