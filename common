@@ -35,6 +35,7 @@ python-mutagen
 python-dbus
 qt6-5compat
 qt6-base
+tor
 ttf-liberation
 ufw
 unrar

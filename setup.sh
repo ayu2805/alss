@@ -84,7 +84,7 @@ echo ""
 sudo pacman -S --needed --noconfirm --disable-download-timeout - <common
 sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
 sudo systemctl disable systemd-resolved.service
-sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd ufw
+sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd tor ufw
 sudo systemctl start ufw
 
 sudo mkdir -p /etc/pacman.d/hooks/
