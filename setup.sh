@@ -321,14 +321,9 @@ else
 fi
 
 echo ""
-read -r -p "Do you want to install Cloudflare Warp? [y/N] " response
+read -r -p "Do you want to install BlackArch Repository? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo ""
-    # Dependencies: nspr nss
-    bash -c "$(curl -Ss https://gist.githubusercontent.com/ayu2805/7ad8100b15699605fbf50291af8df16c/raw/warp-update)"
-    echo "Waiting for warp-svc.service to start..."
-    sleep 1
-    warp-cli generate-completions fish | sudo tee /usr/share/fish/completions/warp-cli.fish > /dev/null
+    curl -sS https://blackarch.org/strap.sh | sudo sh
 fi
 
 echo "[FileDialog]
