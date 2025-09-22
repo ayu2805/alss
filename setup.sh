@@ -73,7 +73,6 @@ if [ -z "$(swapon --show)" ]; then
             sudo systemctl enable swapfile.swap
             sudo sed -i '/^HOOKS=/ { /resume/ !s/filesystems/filesystems resume/ }' /etc/mkinitcpio.conf
             sudo mkinitcpio -P
-            sudo sed -i '/^options/ { /mem_sleep_default=deep/! s/$/ mem_sleep_default=deep/ }' /boot/loader/entries/*
         else
             echo "The filesystem type is not ext4."
         fi
