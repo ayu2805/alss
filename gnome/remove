@@ -1,6 +1,5 @@
 baobab
 epiphany
-evince
 gnome-calendar
 gnome-characters
 gnome-clocks
@@ -20,9 +19,10 @@ gnome-user-share
 gnome-weather
 grilo-plugins
 orca
+papers
 rygel
-sushi
 simple-scan
 snapshot
+sushi
 totem
 yelp
