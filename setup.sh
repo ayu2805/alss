@@ -217,6 +217,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.privacy remember-recent-files false
     gsettings set org.gnome.desktop.privacy remove-old-temp-files true
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+    gsettings set org.gnome.desktop.screensaver restart-enabled true
     gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.sound event-sounds false
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
