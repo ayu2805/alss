@@ -162,6 +162,20 @@ EndSection'
 # title=KDE Connect implementation for GNOME
 # description=GSConnect is a complete implementation of KDE Connect
 # ports=1716:1764/tcp|1716:1764/udp"
+gdm="[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+icon-theme='Papirus-Dark'
+show-battery-percentage=true
+
+[org/gnome/desktop/peripherals/keyboard]
+numlock-state=true
+
+[org/gnome/desktop/peripherals/touchpad]
+speed=0.5
+tap-to-click=true
+
+[org/gnome/SessionManager]
+logout-prompt=false"
 
 sddm="[General]
 DisplayServer=wayland
@@ -210,7 +224,6 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface show-battery-percentage true
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
     gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
-    #gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
     gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
     gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     gsettings set org.gnome.desktop.privacy old-files-age 7
@@ -233,14 +246,9 @@ setup_gnome(){
     gsettings set org.gnome.TextEditor wrap-text false
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface show-battery-percentage true
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
-    #sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-    sudo -u gdm dbus-launch gsettings set org.gnome.SessionManager logout-prompt false
+    echo -e "user-db:user\nsystem-db:gdm\nfile-db:/usr/share/gdm/greeter-dconf-defaults" | sudo tee /etc/dconf/profile/gdm > /dev/null
+    echo -e "$gdm" | sudo tee /etc/dconf/db/gdm.d/gdm_config > /dev/null
+    sudo dconf update
     xdg-mime default org.gnome.Nautilus.desktop inode/directory
     xdg-mime default org.gnome.TextEditor.desktop application/json
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
