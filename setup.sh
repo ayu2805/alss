@@ -83,9 +83,8 @@ echo ""
 sudo pacman -S --needed --noconfirm --disable-download-timeout - <common
 sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
 sudo systemctl disable systemd-resolved.service
-sudo systemctl enable apparmor avahi-daemon cups.socket power-profiles-daemon sshd tor ufw
+sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd tor ufw
 sudo systemctl start ufw
-sudo sed -i '/^options/ { /lsm=landlock,lockdown,yama,integrity,apparmor,bpf/! s/$/ lsm=landlock,lockdown,yama,integrity,apparmor,bpf/ }' /boot/loader/entries/*
 
 sudo mkdir -p /etc/pacman.d/hooks/
 echo "[Trigger]
