@@ -161,6 +161,7 @@ EndSection'
 # title=KDE Connect implementation for GNOME
 # description=GSConnect is a complete implementation of KDE Connect
 # ports=1716:1764/tcp|1716:1764/udp"
+
 gdm="[org/gnome/desktop/interface]
 color-scheme='prefer-dark'
 font-name='Adwaita Sans 12'
