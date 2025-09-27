@@ -50,7 +50,7 @@ read -r -p "Do you want to install NVIDIA open source drivers(Turing+)? [y/N] " 
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo pacman -S --needed --noconfirm --disable-download-timeout nvidia-open-dkms nvidia-prime opencl-nvidia switcheroo-control
     echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
-    sudo systemctl enable nvidia-persistenced nvidia-hibernate nvidia-resume nvidia-suspend switcheroo-control
+    sudo systemctl enable nvidia-persistenced switcheroo-control
 
     echo ""
     read -r -p "Do you want to enable NVIDIA's Dynamic Boost(Ampere+)? [y/N] " response
@@ -86,8 +86,7 @@ sudo systemctl disable systemd-resolved.service
 sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd tor ufw
 sudo systemctl start ufw
 
-sudo mkdir -p /etc/pacman.d/hooks/
-echo "[Trigger]
+gutenprint="[Trigger]
 Operation = Install
 Operation = Upgrade
 Operation = Remove
@@ -97,7 +96,9 @@ Target = gutenprint
 [Action]
 Depends = gutenprint
 When = PostTransaction
-Exec = /usr/bin/cups-genppdupdate" | sudo tee /etc/pacman.d/hooks/gutenprint.hook > /dev/null
+Exec = /usr/bin/cups-genppdupdate"
+sudo mkdir -p /etc/pacman.d/hooks/
+echo "$gutenprint" | sudo tee /etc/pacman.d/hooks/gutenprint.hook > /dev/null
 
 sudo ufw enable
 sudo ufw allow IPP
@@ -124,7 +125,6 @@ fi
 echo -e "VISUAL=nano\nEDITOR=nano\nPAGER=more" | sudo tee /etc/environment > /dev/null
 mkdir -p "/home/$(whoami)/.config/Code - OSS/User/"
 curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | tee "/home/$(whoami)/.config/Code - OSS/User/settings.json" > /dev/null
-curl -Ss https://gist.githubusercontent.com/ayu2805/cb1aa225a7e0bc1f1848a89fa33c656a/raw/uct | sudo tee /etc/fish/config.fish > /dev/null
 
 echo ""
 read -r -p "Do you want to configure git? [y/N] " response
