@@ -204,6 +204,7 @@ setup_gnome(){
     sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove) - <gnome/gnome
     sudo systemctl enable gdm
     gsettings set org.gnome.Console ignore-scrollback-limit true
+    gsettings set org.gnome.Console restore-window-size false
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
     gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
