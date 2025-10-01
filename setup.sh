@@ -238,6 +238,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
     gsettings set org.gnome.desktop.sound event-sounds false
     gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+    gsettings set org.gnome.nautilus.icon-view default-zoom-level 'small-plus' 
     gsettings set org.gnome.SessionManager logout-prompt false
     gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop']"
     gsettings set org.gnome.shell.keybindings show-screenshot-ui "['Print', '<Shift><Super>S']"
