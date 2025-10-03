@@ -267,7 +267,7 @@ setup_kde(){
     sudo pacman -S --needed --noconfirm --disable-download-timeout - <kde
     sudo mkdir -p /etc/sddm.conf.d/
     echo -e "$sddm" | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
-    mkdir -p /var/lib/sddm/.config/
+    sudo mkdir -p /var/lib/sddm/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
