@@ -1,6 +1,7 @@
 ark
 bluedevil
 breeze-gtk
+discover
 dolphin
 gwenview
 kate
@@ -9,6 +10,7 @@ kde-gtk-config
 kio-admin
 konsole
 kscreen
+kwallet-pam
 mpv
 partitionmanager
 plasma-dekstop
@@ -16,4 +18,5 @@ plasma-nm
 plasma-pa
 plasma-thunderbolt
 print-manager
+sddm-kcm
 spectacle
