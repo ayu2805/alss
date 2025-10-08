@@ -188,6 +188,7 @@ CursorTheme=breeze_cursors
 
 [Wayland]
 CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 --inputmethod maliit-keyboard"
+# Also add QT_SCREEN_SCALE_FACTORS in GreeterEnvironment for fractional scalling 
 
 nano="include "/usr/share/nano/*.nanorc"
 include "/usr/share/nano/extra/*.nanorc"
