@@ -279,10 +279,10 @@ setup_kde(){
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
     echo -e "[Keyboard]\nNumLock=0" | tee ~/.config/kcminputrc > /dev/null
     echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | tee ~/.config/kdeglobals > /dev/null
-    echo -e "[FeedbackStyle]\nBusyCursor=false" | tee ~/.config/klaunchrc > /dev/null
+    echo -e "[BusyCursorSettings]\nBouncing=false\n[FeedbackStyle]\nBusyCursor=false" | tee ~/.config/klaunchrc > /dev/null
     echo -e "[General]\nconfirmLogout=false\nloginMode=emptySession" | tee ~/.config/ksmserverrc > /dev/null
     echo -e "[KSplash]\nEngine=none\nTheme=None" | tee ~/.config/ksplashrc > /dev/null
-    echo -e "[Plugins]\nzoomEnabled=false" | tee ~/.config/kwinrc > /dev/null
+    echo -e "[Plugins]\nshakecursorEnabled=false" | tee ~/.config/kwinrc > /dev/null
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
     
     if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
