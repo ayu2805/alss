@@ -188,7 +188,8 @@ CursorTheme=breeze_cursors
 
 [Wayland]
 CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 --inputmethod maliit-keyboard"
-# Also add QT_SCREEN_SCALE_FACTORS in GreeterEnvironment for fractional scalling 
+# Also add 'QT_SCREEN_SCALE_FACTORS' variable in GreeterEnvironment for fractional scalling
+# and 'CursorSize' variable in [Theme] for consistent view between DE and DM
 
 nano="include "/usr/share/nano/*.nanorc"
 include "/usr/share/nano/extra/*.nanorc"
