@@ -270,7 +270,7 @@ setup_kde(){
     echo -e "$sddm" | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
     sudo mkdir -p /var/lib/sddm/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
-    echo -e "[Plugins]\nzoomEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
+    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
     sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' /usr/share/sddm/themes/breeze/theme.conf
     echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl enable sddm
@@ -283,6 +283,9 @@ setup_kde(){
     echo -e "[General]\nconfirmLogout=false\nloginMode=emptySession" | tee ~/.config/ksmserverrc > /dev/null
     echo -e "[KSplash]\nEngine=none\nTheme=None" | tee ~/.config/ksplashrc > /dev/null
     echo -e "[Plugins]\nshakecursorEnabled=false" | tee ~/.config/kwinrc > /dev/null
+    echo -e "[General]\nShowWelcomeScreenOnStartup=false" | tee ~/.config/katec > /dev/null
+    echo -e "[General]\nShow welcome view for new window=false" | tee ~/.config/katec > /dev/null
+    echo -e "[General]\nShow welcome view for new window=false" | tee ~/.config/katerc ~/.config/kwriterc > /dev/null
     echo -e "$nano" | sudo tee /etc/nanorc > /dev/null
     
     if [ -n "$(sudo libinput list-devices | grep "Touchpad")" ]; then
