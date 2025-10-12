@@ -187,7 +187,7 @@ Current=breeze
 CursorTheme=breeze_cursors
 
 [Wayland]
-CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 --inputmethod maliit-keyboard"
+CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1"
 # Also add 'QT_SCREEN_SCALE_FACTORS' variable in GreeterEnvironment for fractional scalling
 # and 'CursorSize' variable in [Theme] for consistent view between DE and DM
 
