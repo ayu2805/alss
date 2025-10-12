@@ -283,7 +283,7 @@ setup_kde(){
     echo -e "[BusyCursorSettings]\nBouncing=false\n[FeedbackStyle]\nBusyCursor=false" | tee ~/.config/klaunchrc > /dev/null
     echo -e "[General]\nconfirmLogout=false\nloginMode=emptySession" | tee ~/.config/ksmserverrc > /dev/null
     echo -e "[KSplash]\nEngine=none\nTheme=None" | tee ~/.config/ksplashrc > /dev/null
-    echo -e "[Plugins]\nblurEnabled=false\ncontrastEnabled=true\nshakecursorEnabled=false" | tee ~/.config/kwinrc > /dev/null
+    echo -e "[Effect-overview]\nBorderActivate=9\n\n[Plugins]\nblurEnabled=false\ncontrastEnabled=true\nshakecursorEnabled=false" | tee ~/.config/kwinrc > /dev/null
     echo -e "[General]\nShowWelcomeScreenOnStartup=false" | tee ~/.config/arkrc > /dev/null
     echo -e "[General]\nShow welcome view for new window=false" | tee ~/.config/katerc ~/.config/kwriterc > /dev/null
     echo -e "[PlasmaViews][Panel 2]\nfloating=0\npanelOpacity=1" | tee ~/.config/plasmashellrc > /dev/null
