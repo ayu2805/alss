@@ -121,7 +121,6 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     sudo systemctl enable smb
 fi
 
-#sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 echo -e "VISUAL=nano\nEDITOR=nano\nPAGER=more" | sudo tee /etc/environment > /dev/null
 mkdir -p "/home/$(whoami)/.config/Code - OSS/User/"
 curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | tee "/home/$(whoami)/.config/Code - OSS/User/settings.json" > /dev/null
@@ -209,10 +208,7 @@ setup_gnome(){
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.Console restore-window-size false
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
-    gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
+    gsettings set org.gnome.desktop.app-folders folder-children "['System', 'Utilities']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
