@@ -172,7 +172,7 @@ show-battery-percentage=true
 numlock-state=true
 
 [org/gnome/desktop/peripherals/touchpad]
-speed=0.5
+speed=0.3
 tap-to-click=true
 
 [org/gnome/gnome-session]
@@ -230,7 +230,7 @@ setup_gnome(){
     gsettings set org.gnome.desktop.interface show-battery-percentage true
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
     gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
-    gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
+    gsettings set org.gnome.desktop.peripherals.touchpad speed 0.3
     gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
     gsettings set org.gnome.desktop.privacy old-files-age 7
     gsettings set org.gnome.desktop.privacy remember-recent-files false
