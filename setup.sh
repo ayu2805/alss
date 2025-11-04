@@ -143,11 +143,19 @@ setup_swap() {
     fi
 }
 
+# Helper function to install packages from a file
+# Arguments:
+#   $1 - Path to file containing package list
+install_packages_from_file() {
+    local file="$1"
+    sudo sh -c "pacman -S --needed --noconfirm --disable-download-timeout - < '$file'"
+}
+
 # Install common packages and configure services
 install_common_packages() {
     echo ""
-    # Read packages from file and pass to sudo command
-    sudo sh -c 'pacman -S --needed --noconfirm --disable-download-timeout - < common'
+    # Install packages from file
+    install_packages_from_file common
     
     sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
     sudo systemctl disable systemd-resolved.service
@@ -283,9 +291,10 @@ setup_gnome() {
     echo ""
     
     # Build package list from gnome group excluding packages in gnome/remove, then install
-    sudo sh -c 'pacman -Sgq gnome | grep -vf gnome/remove | xargs pacman -S --needed --noconfirm --disable-download-timeout'
+    # shellcheck disable=SC2046
+    sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove)
     # Install additional packages from gnome/gnome file
-    sudo sh -c 'pacman -S --needed --noconfirm --disable-download-timeout - < gnome/gnome'
+    install_packages_from_file gnome/gnome
     
     sudo systemctl enable gdm
     
@@ -356,8 +365,8 @@ setup_kde() {
     echo "Installing KDE..."
     echo ""
     
-    # Read packages from file and pass to sudo command
-    sudo sh -c 'pacman -S --needed --noconfirm --disable-download-timeout - < kde'
+    # Install packages from file
+    install_packages_from_file kde
     
     # Configure SDDM
     sudo mkdir -p /etc/sddm.conf.d/
@@ -395,7 +404,7 @@ setup_kde() {
         local touchpad_id vendor_id product_id vendor_id_dec product_id_dec
         touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
         vendor_id=$(echo "$touchpad_id" | awk '{print substr($2, 1, 4)}')
-        product_id=$(echo "$touchpad_id" | awk '{print substr($2, 6, 9)}')
+        product_id=$(echo "$touchpad_id" | awk '{print substr($2, 6, 4)}')
         vendor_id_dec=$(printf "%d" "0x$vendor_id")
         product_id_dec=$(printf "%d" "0x$product_id")
         echo -e "\n[Libinput][$vendor_id_dec][$product_id_dec][$touchpad_id]\nNaturalScroll=true" | \
