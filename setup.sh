@@ -148,7 +148,13 @@ setup_swap() {
 #   $1 - Path to file containing package list
 install_packages_from_file() {
     local file="$1"
-    sudo sh -c "pacman -S --needed --noconfirm --disable-download-timeout - < '$file'"
+    # Validate file exists and is readable
+    if [ ! -r "$file" ]; then
+        echo "Error: Cannot read file '$file'" >&2
+        return 1
+    fi
+    # Use command substitution to safely pass file contents to sudo
+    xargs -a "$file" sudo pacman -S --needed --noconfirm --disable-download-timeout
 }
 
 # Install common packages and configure services
@@ -291,8 +297,12 @@ setup_gnome() {
     echo ""
     
     # Build package list from gnome group excluding packages in gnome/remove, then install
-    # shellcheck disable=SC2046
-    sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove)
+    local gnome_packages
+    gnome_packages=$(pacman -Sgq gnome | grep -vf gnome/remove)
+    if [ -n "$gnome_packages" ]; then
+        # shellcheck disable=SC2086
+        sudo pacman -S --needed --noconfirm --disable-download-timeout $gnome_packages
+    fi
     # Install additional packages from gnome/gnome file
     install_packages_from_file gnome/gnome
     
@@ -488,7 +498,20 @@ setup_chaotic_aur() {
 setup_blackarch() {
     echo ""
     if prompt_yes_no "Do you want to install BlackArch Repository?"; then
-        curl -sS https://blackarch.org/strap.sh | sudo sh
+        # Download and verify the script before execution
+        local script_url="https://blackarch.org/strap.sh"
+        local temp_script="/tmp/blackarch-strap.sh"
+        
+        echo "Downloading BlackArch setup script..."
+        if curl -sS "$script_url" -o "$temp_script"; then
+            echo "Downloaded. Please review the script at $temp_script before proceeding."
+            read -r -p "Press Enter to continue with installation, or Ctrl+C to cancel..."
+            sudo sh "$temp_script"
+            rm -f "$temp_script"
+        else
+            echo "Failed to download BlackArch setup script" >&2
+            return 1
+        fi
     fi
 }
 
