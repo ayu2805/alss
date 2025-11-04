@@ -282,8 +282,9 @@ setup_gnome() {
     echo "Installing Gnome..."
     echo ""
     
-    # Build package list and install with proper sudo handling
-    sudo sh -c "pacman -Sgq gnome | grep -vf gnome/remove | pacman -S --needed --noconfirm --disable-download-timeout -"
+    # Build package list from gnome group excluding packages in gnome/remove, then install
+    sudo sh -c 'pacman -Sgq gnome | grep -vf gnome/remove | xargs pacman -S --needed --noconfirm --disable-download-timeout'
+    # Install additional packages from gnome/gnome file
     sudo sh -c 'pacman -S --needed --noconfirm --disable-download-timeout - < gnome/gnome'
     
     sudo systemctl enable gdm
@@ -486,6 +487,10 @@ setup_blackarch() {
 configure_qt_dialog() {
     local username
     username="$(whoami)"
+    
+    # Ensure config directory exists
+    mkdir -p ~/.config/
+    
     cat <<EOF | tee ~/.config/QtProject.conf > /dev/null
 [FileDialog]
 shortcuts=file:, file:///home/$username, file:///home/$username/Desktop, file:///home/$username/Documents, file:///home/$username/Downloads, file:///home/$username/Music, file:///home/$username/Pictures, file:///home/$username/Videos
