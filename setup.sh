@@ -16,7 +16,6 @@ prompt_yes_no() {
     local response
     read -r -p "$prompt [y/N] " response
     [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
-    validate_yes_no "$response"
 }
 
 #######################################
