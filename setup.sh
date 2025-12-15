@@ -318,7 +318,7 @@ EOF
 
     local touchpad_id
     touchpad_id=$(grep 'Touchpad' /proc/bus/input/devices | awk -F'"' '{print $2}')
-    if touchpad_id; then
+    if $touchpad_id; then
         local vendor_id product_id vendor_id_dec product_id_dec
         vendor_id=$(echo "$touchpad_id" | awk '{print substr($2, 1, 4)}')
         product_id=$(echo "$touchpad_id" | awk '{print substr($2, 6, 4)}')
