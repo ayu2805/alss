@@ -316,7 +316,8 @@ EOF
     echo -e "[Plugin-org.kde.ActivityManager.Resources.Scoring]\nwhat-to-remember=2" | \
         tee ~/.config/kactivitymanagerd-pluginsrc > /dev/null
 
-    local touchpad_id = grep 'Touchpad' /proc/bus/input/devices | awk -F'"' '{print $2}'
+    local touchpad_id
+    touchpad_id=$(grep 'Touchpad' /proc/bus/input/devices | awk -F'"' '{print $2}')
     if touchpad_id; then
         local vendor_id product_id vendor_id_dec product_id_dec
         vendor_id=$(echo "$touchpad_id" | awk '{print substr($2, 1, 4)}')
