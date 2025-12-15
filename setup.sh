@@ -315,10 +315,10 @@ EOF
     echo -e "[PlasmaViews][Panel 2]\nfloating=0\npanelOpacity=1\n\n[PlasmaViews][Panel 2][Defaults]\nthickness=42" | tee ~/.config/plasmashellrc > /dev/null
     echo -e "[Plugin-org.kde.ActivityManager.Resources.Scoring]\nwhat-to-remember=2" | \
         tee ~/.config/kactivitymanagerd-pluginsrc > /dev/null
-        
-    if sudo libinput list-devices | grep -q "Touchpad"; then
-        local touchpad_id vendor_id product_id vendor_id_dec product_id_dec
-        touchpad_id=$(sudo libinput list-devices | grep "Touchpad" | awk '{$1=""; print substr($0, 2)}')
+
+    local touchpad_id = grep 'Touchpad' /proc/bus/input/devices | awk -F'"' '{print $2}'
+    if touchpad_id; then
+        local vendor_id product_id vendor_id_dec product_id_dec
         vendor_id=$(echo "$touchpad_id" | awk '{print substr($2, 1, 4)}')
         product_id=$(echo "$touchpad_id" | awk '{print substr($2, 6, 4)}')
         vendor_id_dec=$(printf "%d" "0x$vendor_id")
