@@ -292,6 +292,9 @@ CursorTheme=breeze_cursors
 [Wayland]
 CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1
 EOF
+    # Also add 'QT_SCREEN_SCALE_FACTORS' variable in GreeterEnvironment for fractional scalling
+    # and 'CursorSize' variable in [Theme] for consistent view between DE and DM
+    
     sudo mkdir -p /var/lib/sddm/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
     echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
