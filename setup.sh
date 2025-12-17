@@ -203,7 +203,10 @@ setup_gnome() {
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.Console restore-window-size false
     gsettings set org.gnome.desktop.a11y always-show-universal-access-status true
-    gsettings set org.gnome.desktop.app-folders folder-children "['System', 'Utilities']"
+    gsettings set org.gnome.desktop.app-folders folder-children "['Office', 'System', 'Utilities']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ categories "['Office']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ categories "['System']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ translate true
