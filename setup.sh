@@ -157,6 +157,10 @@ Depends = gutenprint
 When = PostTransaction
 Exec = /usr/bin/cups-genppdupdate
 EOF
+
+    mkdir -p "/home/$(whoami)/.config/Code - OSS/User/"
+    curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | \
+        tee "/home/$(whoami)/.config/Code - OSS/User/settings.json" > /dev/null
 }
 
 setup_samba() {
