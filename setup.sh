@@ -124,7 +124,7 @@ install_common_packages() {
     echo ""
     sudo pacman -S --needed --noconfirm --disable-download-timeout - < common
     
-    sudo sed -i '/^hosts: mymachines/ s/hosts: mymachines/hosts: mymachines mdns/' /etc/nsswitch.conf
+    sudo sed -i '/^hosts: mymachines/ { /mdns/! s/^hosts: mymachines/& mdns/; }' /etc/nsswitch.conf
     sudo systemctl disable systemd-resolved.service
     sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd ufw
     sudo systemctl start ufw
