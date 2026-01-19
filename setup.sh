@@ -290,17 +290,16 @@ setup_kde() {
     cat << EOF | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
 [General]
 DisplayServer=wayland
-GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell, QT_SCREEN_SCALE_FACTORS=
 
 [Theme]
 Current=breeze
 CursorTheme=breeze_cursors
+CursorSize=
 
 [Wayland]
 CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1
 EOF
-    # Also add 'QT_SCREEN_SCALE_FACTORS' variable in GreeterEnvironment for fractional scalling
-    # and 'CursorSize' variable in [Theme] for consistent view between DE and DM
     
     sudo mkdir -p /var/lib/sddm/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
