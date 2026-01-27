@@ -123,8 +123,7 @@ setup_swap() {
 install_common_packages() {
     echo ""
     sudo pacman -S --needed --noconfirm --disable-download-timeout - < common
-    
-    sudo sed -i '/^hosts: mymachines/ { /mdns/! s/^hosts: mymachines/& mdns/; }' /etc/nsswitch.conf
+    sudo sed -i '/^hosts: mymachines/ { /mdns_minimal/! s/^hosts: mymachines/& mdns_minimal [NOTFOUND=return]/; }' /etc/nsswitch.conf
     sudo systemctl mask systemd-resolved
     sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd ufw
     sudo systemctl start ufw
