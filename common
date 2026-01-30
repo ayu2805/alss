@@ -2,14 +2,12 @@ android-tools
 aria2
 clang
 code
-cups-pdf
 devtools
 dosfstools
 e2fsprogs
 exfatprogs
 firefox
 firefox-ublock-origin
-fish
 flatpak
 foomatic-db
 foomatic-db-engine
@@ -24,7 +22,6 @@ gst-plugins-good
 gst-plugins-ugly
 gutenprint
 inetutils
-libreoffice-fresh
 llvm
 nano
 noto-fonts

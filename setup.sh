@@ -49,13 +49,13 @@ setup_pacman() {
 
 update_system() {
     echo ""
-    sudo pacman -Syu --needed --noconfirm --disable-download-timeout pacman-contrib
+    sudo pacman -Syu
     
-    if pactree -r linux &>/dev/null; then
+    if pacman -Qi linux &>/dev/null; then
         sudo pacman -S --needed --noconfirm --disable-download-timeout linux-headers
     fi
 
-    if pactree -r linux-zen &>/dev/null; then
+    if pacman -Qi linux-zen &>/dev/null; then
         sudo pacman -S --needed --noconfirm --disable-download-timeout linux-zen-headers
     fi
 }
@@ -135,8 +135,6 @@ configure_system() {
     sudo ufw allow SSH
     sudo ufw allow Bonjour
     sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
-    sudo chsh -s /usr/bin/fish "$(whoami)"
-    sudo chsh -s /usr/bin/fish
 
     sudo sed -i "s/^PKGEXT.*/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
     sudo sed -i 's/^#MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
@@ -362,13 +360,13 @@ select_desktop_environment() {
 
 configure_post_de() {
     echo ""
-    if pactree -r bluez &>/dev/null; then
+    if pacman -Qi bluez &>/dev/null; then
         sudo sed -i 's/^#AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
         sudo sed -i 's/^AutoEnable.*/AutoEnable=false/' /etc/bluetooth/main.conf
         sudo systemctl enable bluetooth
     fi
 
-    if pactree -r gtk4 &>/dev/null; then
+    if pacman -Qi gtk4 &>/dev/null; then
         echo "GSK_RENDERER=ngl" | sudo tee -a /etc/environment > /dev/null
     fi
     
@@ -394,7 +392,7 @@ EOF
 
 setup_chaotic_aur() {
     echo ""
-    if pactree -r chaotic-keyring &>/dev/null && pactree -r chaotic-mirrorlist &>/dev/null; then
+    if pacman -Qi chaotic-keyring &>/dev/null && pacman -Qi chaotic-mirrorlist &>/dev/null; then
         echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | \
             sudo tee -a /etc/pacman.d/custom > /dev/null
     else
