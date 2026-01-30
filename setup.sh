@@ -175,6 +175,28 @@ setup_kde() {
     echo ""
     
     sudo dnf install -y $(cat fedora/kde)
+    
+    sudo mkdir -p /etc/sddm.conf.d/
+    cat << EOF | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
+[General]
+DisplayServer=wayland
+GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell, QT_SCREEN_SCALE_FACTORS=
+
+[Theme]
+Current=breeze
+CursorTheme=breeze_cursors
+CursorSize=
+
+[Wayland]
+CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1
+EOF
+    
+    sudo mkdir -p /var/lib/sddm/.config/
+    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
+    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
+    sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' \
+        /usr/share/sddm/themes/breeze/theme.conf
+    echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
     sudo systemctl set-default graphical.target
 
     mkdir -p ~/.config/
@@ -277,6 +299,7 @@ main() {
     
     install_common_packages
     configure_system
+    setup_samba
     setup_git
     
     select_desktop_environment
