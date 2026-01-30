@@ -70,7 +70,6 @@ setup_gnome() {
     echo ""
     
     sudo dnf install -y $(cat fedora/gnome)
-    sudo systemctl enable gdm
     
     gsettings set org.gnome.Console ignore-scrollback-limit true
     gsettings set org.gnome.Console restore-window-size false
@@ -153,7 +152,6 @@ setup_kde() {
     echo ""
     
     sudo dnf install -y $(cat fedora/kde)
-    sudo systemctl enable sddm
 
     mkdir -p ~/.config/
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null

@@ -1,5 +1,6 @@
-adw-gtk-theme
+adw-gtk3-theme
 file-roller
 gnome-text-editor
 papirus-icon-theme
-gnome-desktop
+gnome-shell
+gnome-console
