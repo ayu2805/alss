@@ -175,21 +175,10 @@ setup_kde() {
     echo ""
     
     sudo dnf install -y $(cat fedora/kde)
-    
-    sudo mkdir -p /etc/sddm.conf.d/
-    cat << EOF | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
-[General]
-DisplayServer=wayland
-GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell, QT_SCREEN_SCALE_FACTORS=
 
-[Theme]
-Current=breeze
-CursorTheme=breeze_cursors
-CursorSize=
-
-[Wayland]
-CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1
-EOF
+    sudo sed -i '/^GreeterEnvironment/ { /, QT_SCREEN_SCALE_FACTORS=/! s/$/, QT_SCREEN_SCALE_FACTORS=/; }' \
+        /usr/lib/sddm/sddm.conf.d/plasma-wayland.conf
+    sudo sed -i '/^Current=/ s/=.*/=breeze/' /usr/lib/sddm/sddm.conf.d/kde_settings.conf
     
     sudo mkdir -p /var/lib/sddm/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
