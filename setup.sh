@@ -136,6 +136,8 @@ configure_system() {
     sudo ufw allow Bonjour
     sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services/
 
+    echo 'PS1="\[\e[32m\][\u@\h \W]\[\e[34m\]$\[\e[0m\] "' | sudo tee /etc/bash.bashrc > /dev/null
+
     sudo sed -i "s/^PKGEXT.*/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
     sudo sed -i 's/^#MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
     sudo sed -i 's/^MAKEFLAGS.*/MAKEFLAGS="-j$(nproc)"/' /etc/makepkg.conf
