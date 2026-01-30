@@ -52,7 +52,7 @@ configure_system() {
     sudo ufw allow IPP
     sudo ufw allow SSH
     sudo ufw allow Bonjour
-    echo 'PS1="\[\e[32m\][\u@\h \W]\[\e[34m\]$\[\e[0m\] "' | sudo tee /etc/bash.bashrc > /dev/null
+    echo 'PS1="\[\e[32m\][\u@\h \W]\[\e[34m\]$\[\e[0m\] "' | tee /home/$(whoami)/.bashrc > /dev/null
 }
 
 setup_samba() {
@@ -272,12 +272,6 @@ viewMode=Detail
 EOF
 }
 
-cleanup() {
-    rm -f ~/.bash*
-    echo ""
-    echo "You can now reboot your system"
-}
-
 #######################################
 # Main Execution
 #######################################
@@ -293,8 +287,6 @@ main() {
     
     select_desktop_environment
     configure_post_de
-    
-    cleanup
 }
 
 main "$@"
