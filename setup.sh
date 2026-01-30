@@ -47,6 +47,28 @@ install_common_packages() {
     sudo dnf install -y $(cat fedora/common)
 }
 
+configure_system() {
+    sudo ufw enable
+    sudo ufw allow IPP
+    sudo ufw allow SSH
+    sudo ufw allow Bonjour
+    echo 'PS1="\[\e[32m\][\u@\h \W]\[\e[34m\]$\[\e[0m\] "' | sudo tee /etc/bash.bashrc > /dev/null
+}
+
+setup_samba() {
+    echo ""
+    if prompt_yes_no "Do you want to setup Samba?"; then
+        sudo dnf install -y samba
+        sudo smbpasswd -a "$(whoami)"
+        sudo ufw allow CIFS
+        echo -e "\n[Samba Share]\ncomment = Samba Share\npath = /home/$(whoami)/Samba Share\nread only = no" | \
+            sudo tee -a /etc/samba/smb.conf > /dev/null
+        rm -rf ~/Samba\ Share
+        mkdir ~/Samba\ Share
+        sudo systemctl enable smb
+    fi
+}
+
 setup_git() {
     echo ""
     if prompt_yes_no "Do you want to configure git?"; then
@@ -254,6 +276,7 @@ main() {
     setup_user_info
     
     install_common_packages
+    configure_system
     setup_git
     
     select_desktop_environment
