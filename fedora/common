@@ -1,6 +1,8 @@
 android-tools
 aria2
 clang
+dosfstools
+exfatprogs
 firefox
 mozilla-ublock-origin
 flatpak
