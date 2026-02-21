@@ -122,7 +122,7 @@ setup_swap() {
 
 install_common_packages() {
     echo ""
-    sudo pacman -S --needed --noconfirm --disable-download-timeout - < common
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - < arch/common
     sudo sed -i '/^hosts: mymachines/ { /mdns_minimal/! s/^hosts: mymachines/& mdns_minimal [NOTFOUND=return]/; }' /etc/nsswitch.conf
     sudo systemctl mask systemd-resolved
     sudo systemctl enable avahi-daemon cups.socket power-profiles-daemon sshd ufw
@@ -199,8 +199,7 @@ setup_gnome() {
     echo "Installing Gnome..."
     echo ""
     
-    sudo pacman -S --needed --noconfirm --disable-download-timeout $(pacman -Sgq gnome | grep -vf gnome/remove)
-    sudo pacman -S --needed --noconfirm --disable-download-timeout - < gnome/gnome
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - < arch/gnome
     sudo systemctl enable gdm
     
     gsettings set org.gnome.Console ignore-scrollback-limit true
@@ -283,7 +282,7 @@ setup_kde() {
     echo "Installing KDE..."
     echo ""
     
-    sudo pacman -S --needed --noconfirm --disable-download-timeout - < kde
+    sudo pacman -S --needed --noconfirm --disable-download-timeout - < arch/kde
     
     sudo mkdir -p /etc/sddm.conf.d/
     cat << EOF | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null

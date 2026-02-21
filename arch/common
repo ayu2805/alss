@@ -4,7 +4,6 @@ clang
 code
 devtools
 dosfstools
-e2fsprogs
 exfatprogs
 firefox
 firefox-ublock-origin
@@ -21,14 +20,12 @@ gst-plugins-base
 gst-plugins-good
 gst-plugins-ugly
 gutenprint
-inetutils
 llvm
 nano
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
-ntfs-3g
 power-profiles-daemon
 python-mutagen
 python-dbus
