@@ -284,28 +284,10 @@ setup_kde() {
     
     sudo pacman -S --needed --noconfirm --disable-download-timeout - < arch/kde
     
-    sudo mkdir -p /etc/sddm.conf.d/
-    cat << EOF | sudo tee /usr/lib/sddm/sddm.conf.d/default.conf > /dev/null
-[General]
-DisplayServer=wayland
-GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell, QT_SCREEN_SCALE_FACTORS=
-
-[Theme]
-Current=breeze
-CursorTheme=breeze_cursors
-CursorSize=
-
-[Wayland]
-CompositorCommand=kwin_wayland --no-global-shortcuts --no-lockscreen --inputmethod maliit-keyboard --locale1
-EOF
-    
-    sudo mkdir -p /var/lib/sddm/.config/
-    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
-    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
-    sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' \
-        /usr/share/sddm/themes/breeze/theme.conf
-    echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
-    sudo systemctl enable sddm
+    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/plasmalogin/.config/kcminputrc > /dev/null
+    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/plasmalogin/.config/kwinrc > /dev/null
+    echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | sudo tee /var/lib/plasmalogin/.config/kdeglobals > /dev/null
+    sudo systemctl enable plasmalogin
 
     mkdir -p ~/.config/
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
@@ -319,7 +301,8 @@ EOF
         tee ~/.config/kwinrc > /dev/null
     echo -e "[General]\nShowWelcomeScreenOnStartup=false" | tee ~/.config/arkrc > /dev/null
     echo -e "[General]\nShow welcome view for new window=false" | tee ~/.config/katerc ~/.config/kwriterc > /dev/null
-    echo -e "[PlasmaViews][Panel 2]\nfloating=0\npanelOpacity=1\n\n[PlasmaViews][Panel 2][Defaults]\nthickness=42" | tee ~/.config/plasmashellrc > /dev/null
+    echo -e "[PlasmaViews][Panel 2]\nfloating=0\npanelOpacity=1\n\n[PlasmaViews][Panel 2][Defaults]\nthickness=42" | \
+        tee ~/.config/plasmashellrc > /dev/null
     echo -e "[Plugin-org.kde.ActivityManager.Resources.Scoring]\nwhat-to-remember=2" | \
         tee ~/.config/kactivitymanagerd-pluginsrc > /dev/null
 

@@ -16,11 +16,12 @@ litehtml
 mpv
 partitionmanager
 plasma-desktop
+plasma-keyboard
+plasma-login-manager
 plasma-nm
 plasma-pa
 plasma-systemmonitor
 plasma-thunderbolt
 plasma-workspace-wallpapers
 print-manager
-sddm
 spectacle

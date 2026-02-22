@@ -175,17 +175,10 @@ setup_kde() {
     echo ""
     
     sudo dnf install -y $(cat fedora/kde)
-
-    sudo sed -i '/^GreeterEnvironment/ { /, QT_SCREEN_SCALE_FACTORS=/! s/$/, QT_SCREEN_SCALE_FACTORS=/; }' \
-        /usr/lib/sddm/sddm.conf.d/plasma-wayland.conf
-    sudo sed -i '/^Current=/ s/=.*/=breeze/' /usr/lib/sddm/sddm.conf.d/kde_settings.conf
     
-    sudo mkdir -p /var/lib/sddm/.config/
-    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/sddm/.config/kcminputrc > /dev/null
-    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/sddm/.config/kwinrc > /dev/null
-    sudo sed -i 's/^background=.*/background=\/usr\/share\/wallpapers\/Next\/contents\/images_dark\/5120x2880.png/' \
-        /usr/share/sddm/themes/breeze/theme.conf
-    echo -e "[Icon Theme]\nInherits=breeze_cursors" | sudo tee /usr/share/icons/default/index.theme > /dev/null
+    echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/plasmalogin/.config/kcminputrc > /dev/null
+    echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/plasmalogin/.config/kwinrc > /dev/null
+    echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | sudo tee /var/lib/plasmalogin/.config/kdeglobals > /dev/null
     sudo systemctl set-default graphical.target
 
     mkdir -p ~/.config/
