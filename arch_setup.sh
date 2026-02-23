@@ -284,6 +284,7 @@ setup_kde() {
     
     sudo pacman -S --needed --noconfirm --disable-download-timeout - < arch/kde
     
+    sudo mkdir -p /var/lib/plasmalogin/.config/
     echo -e "[Keyboard]\nNumLock=0" | sudo tee /var/lib/plasmalogin/.config/kcminputrc > /dev/null
     echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/plasmalogin/.config/kwinrc > /dev/null
     echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | sudo tee /var/lib/plasmalogin/.config/kdeglobals > /dev/null
