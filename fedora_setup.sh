@@ -266,6 +266,12 @@ viewMode=Detail
 EOF
 }
 
+cleanup() {
+    rm -f ~/.bash*
+    echo ""
+    echo "You can now reboot your system"
+}
+
 #######################################
 # Main Execution
 #######################################
@@ -281,6 +287,7 @@ main() {
     
     select_desktop_environment
     configure_post_de
+    cleanup
 }
 
 main "$@"
