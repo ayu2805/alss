@@ -181,6 +181,7 @@ setup_kde() {
     echo -e "[Plugins]\nshakecursorEnabled=false" | sudo tee /var/lib/plasmalogin/.config/kwinrc > /dev/null
     echo -e "[KDE]\nLookAndFeelPackage=org.kde.breezedark.desktop" | sudo tee /var/lib/plasmalogin/.config/kdeglobals > /dev/null
     sudo systemctl enable plasmalogin.service
+    sudo systemctl set-default graphical.target
 
     mkdir -p ~/.config/
     echo -e "[General]\nRememberOpenedTabs=false" | tee ~/.config/dolphinrc > /dev/null
