@@ -41,6 +41,19 @@ setup_user_info() {
     fi
 }
 
+install_nvidia_drivers() {
+    echo ""
+    if prompt_yes_no "Do you want to install NVIDIA open source drivers?"; then
+        sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+        sudo dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda switcheroo-control
+
+        echo ""
+        if prompt_yes_no "Do you want to enable NVIDIA's Dynamic Boost(Ampere+)?"; then
+            sudo systemctl enable nvidia-powerd
+        fi
+    fi
+}
+
 install_common_packages() {
     echo ""
     sudo dnf upgrade -y
