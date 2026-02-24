@@ -45,6 +45,7 @@ install_nvidia_drivers() {
     echo ""
     if prompt_yes_no "Do you want to install NVIDIA open source drivers?"; then
         sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+        sudo dnf upgrade -y
         sudo dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda switcheroo-control
 
         echo ""
@@ -56,6 +57,17 @@ install_nvidia_drivers() {
 
 install_common_packages() {
     echo ""
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    cat << EOF | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+autorefresh=1
+type=rpm-md
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
     sudo dnf upgrade -y
     sudo dnf install -y $(cat fedora/common)
 }
