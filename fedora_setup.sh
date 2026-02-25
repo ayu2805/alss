@@ -77,6 +77,10 @@ configure_system() {
     sudo ufw allow SSH
     sudo ufw allow Bonjour
     echo 'PS1="\[\e[32m\][\u@\h \W]\[\e[34m\]$\[\e[0m\] "' | tee /home/$(whoami)/.bashrc > /dev/null
+
+    mkdir -p "/home/$(whoami)/.config/Code/User/"
+    curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | \
+        tee "/home/$(whoami)/.config/Code/User/settings.json" > /dev/null
 }
 
 setup_samba() {
