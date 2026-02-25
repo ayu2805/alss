@@ -41,6 +41,10 @@ setup_user_info() {
     fi
 }
 
+setup_dnf() {
+    echo -e "[main]\ninstall_weak_deps = false\ndefaultyes = true" | sudo tee /etc/dnf/dnf.conf > /dev/null
+}
+
 install_nvidia_drivers() {
     echo ""
     if prompt_yes_no "Do you want to install NVIDIA open source drivers?"; then
@@ -274,7 +278,6 @@ configure_post_de() {
     
     cat << EOF | sudo tee /etc/nanorc > /dev/null
 include "/usr/share/nano/*.nanorc"
-include "/usr/share/nano/extra/*.nanorc"
 
 set autoindent
 set constantshow
@@ -299,6 +302,7 @@ EOF
 main() {
     check_root
     setup_user_info
+    setup_dnf
 
     install_nvidia_drivers
     install_common_packages
