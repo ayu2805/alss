@@ -4,7 +4,6 @@ bluez-tools
 breeze-gtk
 dolphin
 gwenview
-kate
 kcalc
 kde-gtk-config
 kde-partitionmanager
@@ -13,6 +12,7 @@ kio-admin
 konsole
 kscreen
 kwallet-pam
+kwrite
 litehtml
 mpv
 plasma-desktop
