@@ -66,10 +66,10 @@ install_cpu_drivers() {
 
     case "$cpu_vendor" in
         GenuineIntel)
-            sudo pacman -S --needed --noconfirm --disable-download-timeout intel-media-driver vulkan-intel
+            sudo pacman -S --needed --noconfirm --disable-download-timeout vulkan-intel
             ;;
         AuthenticAMD)
-            sudo pacman -S --needed --noconfirm --disable-download-timeout libva-mesa-driver vulkan-radeon
+            sudo pacman -S --needed --noconfirm --disable-download-timeout vulkan-radeon
             ;;
         *)
             echo "Unknown CPU vendor: $cpu_vendor"
