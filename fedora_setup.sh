@@ -299,7 +299,8 @@ EOF
 main() {
     check_root
     setup_user_info
-    
+
+    install_nvidia_drivers
     install_common_packages
     configure_system
     setup_samba
