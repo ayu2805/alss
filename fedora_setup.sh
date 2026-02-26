@@ -82,6 +82,8 @@ configure_system() {
     systemctl --user enable --now pipewire-pulse.socket
     systemctl --user enable --now wireplumber
 
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
     mkdir -p "/home/$(whoami)/.config/Code/User/"
     curl -Ss https://gist.githubusercontent.com/ayu2805/7bae58a7e279199552f77e3ae577bd6c/raw/settings.json | \
         tee "/home/$(whoami)/.config/Code/User/settings.json" > /dev/null
