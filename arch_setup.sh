@@ -51,13 +51,12 @@ update_system() {
     echo ""
     sudo pacman -Syu
     
-    if pacman -Qi linux &>/dev/null; then
-        sudo pacman -S --needed --noconfirm --disable-download-timeout linux-headers
-    fi
-
-    if pacman -Qi linux-zen &>/dev/null; then
-        sudo pacman -S --needed --noconfirm --disable-download-timeout linux-zen-headers
-    fi
+    kernels=("linux" "linux-zen" "linux-lts" "linux-hardened")
+    for kernel in "${kernels[@]}"; do
+        if pacman -Qi $kernel &>/dev/null; then
+            sudo pacman -S --needed --noconfirm --disable-download-timeout ${kernel}-headers
+        fi
+    done
 }
 
 install_cpu_drivers() {
@@ -82,8 +81,6 @@ install_nvidia_drivers() {
     if prompt_yes_no "Do you want to install NVIDIA open source drivers(Turing+)?"; then
         sudo pacman -S --needed --noconfirm --disable-download-timeout \
             nvidia-open-dkms nvidia-prime opencl-nvidia switcheroo-control
-        echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_UsePageAttributeTable=1" | \
-            sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
         sudo systemctl enable nvidia-persistenced switcheroo-control
 
         echo ""
